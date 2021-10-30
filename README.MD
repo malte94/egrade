@@ -6,7 +6,7 @@ Languages: PHP, Twig, JavaScript, HTML, CSS
 
 # Demo
 
-Either setup an own environment with demo.sql and appropriate settings in config.php and db.php, or visit the following website:
+Either setup an own environment with demo.sql, PHP Composer and appropriate settings in config.php and db.php, or visit the following website:
 
 https://zeugnis.webjects.de/
 
