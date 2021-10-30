@@ -1,0 +1,90 @@
+.tox .tox-toolbar, .tox .tox-toolbar__primary {
+    /* background: #eee; */
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none;
+    overflow: hidden !important;
+}
+
+.tox.tox-tinymce-aux .tox-toolbar__overflow {
+    background-color: #fff !important;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 15px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.15);
+}
+
+.tox-edit-area {
+    overflow: hidden !important;
+}
+
+.tox-tinymce {
+    border: none !important;
+}
+
+.tox .tox-toolbar__group {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 0;
+    padding: 0 4px 0 4px;
+    margin-left: -12px;
+}
+.tox .tox-toolbar-overlord {
+    background-color: transparent;
+}
+
+.tox .tox-statusbar {
+    background-color: transparent;
+    border-top: none;
+}
+
+.tox-editor-header {
+    overflow: hidden !important;
+}
+
+.tox .tox-menubar {
+    background: transparent !important;
+    background-color: transparent !important;
+}
+
+.mce-content-body, body.mceContentBody, .mceEditorArea, .tox .tox-edit-area__iframe {
+    font-family: 'Lato';
+    font-size: 14px;
+    background: transparent !important;
+    background-color: transparent !important;
+}
+
+.mce-pagebreak {
+    width: 95% !important;
+}
+
+div.mce-fullscreen, .tox-fullscreen {
+    min-width: 100vw;
+    min-height: 100vh;
+    overflow: auto;
+    z-index: 999;
+    background: #eee !important;
+    background-color: #eee !important;
+}
+
+.tox:not([dir=rtl]) .tox-toolbar__group:not(:last-of-type) {
+    border: none !important;
+}
+
+button.tox-mbtn.tox-mbtn--select {
+    margin-left: -10px;
+    margin-right: 20px;
+    /* margin-bottom: 10px; */
+}
+
+.tox .tox-menubar+.tox-toolbar, .tox .tox-menubar+.tox-toolbar-overlord .tox-toolbar__primary {
+    border-top: none;
+    border-bottom: 4px solid #d8d8d850;
+}
+
+.tox-mbtn--select:hover, .tox .tox-mbtn__select-label:hover, .tox .tox-mbtn--active {
+    color: #009ac9;
+    background: none !important;
+    cursor: pointer;
+}

@@ -1,0 +1,26 @@
+<!-- Template NRW_C1_1 -->
+
+<div class="box flex-100">
+    <div class="share"></div>
+    <h2>Hinweise zum Arbeits- und Sozialverhalten</h2>
+    <div>
+    <textarea name="hinweise_lern_arbeits_und_sozialverhalten" placeholder="Bisher noch keine Eingabe ...">{{ model.getHinweiseLernArbeitsSozialverhalten }}</textarea>
+    </div>
+</div>
+
+<div class="box flex-100">
+    <div class="share"></div>
+    <h2>Hinweise zu Lernbereichen / Fächern</h2>
+    <textarea name="hinwesie_lernbereiche" placeholder="Bisher noch keine Eingabe ...">{{ model.getHinweiseLernbereiche }}</textarea>
+</div>
+
+<div class="box flex-100">
+    <div class="share"></div>
+    <h2>Bemerkungen</h2>
+    <textarea name="bemerkungen" placeholder="Bisher noch keine Eingabe ...">{{ model.getBemerkungen }}</textarea>
+</div>
+
+<div class="box flex-100">
+    <h2>Fehlzeiten</h2>
+    Es wurden ... <input type="number" value="{{ model.getFehlzeitenEntschuldigt }}" max="180" name="fehlzeiten_entschuldigt" id="template-rlp-1-fehlzeiten-entschuldigt" class="input-egrade input-small"></input> Fehltage verzeichnet. Davon sind <input type="number" value="{{ model.getFehlzeitenUnentschuldigt }}" max="180" name="fehlzeiten_unentschuldigt" id="template-rlp-1-fehlzeiten-unentschuldigt" maxlength="2" class="input-egrade input-small"></input> Fehltage unentschuldigt.
+</div>

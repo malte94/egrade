@@ -1,0 +1,88 @@
+<script type="module">
+
+$( "direct-label" ).on( "click", function() {
+    $(this).next('input').select();
+});
+
+/* __________________________ ROUTING ________________________________ */
+
+viewRouting("button.btn-delete-class", '', '&asyncDeleteClass=1', 3, 'html', '');
+viewRouting("button.btn-delete-student", '', '&asyncDeleteStudent=1', 3, 'html', '');
+
+/* Add Student */
+
+$("#btnAddStudent").click(function() {  
+
+var student_firstname = $( ".input-student-firstname" ).val();
+var student_lastname = $( ".input-student-lastname" ).val();
+var student_date_of_birth = $( ".input-student-date-of-birth" ).val();
+
+if (student_firstname !== '' && student_lastname !== '' && student_date_of_birth != '') {
+    submit("#frmAddStudent", "Der Schüler wurde hinzugefügt.");
+    directRouting('index.php?function=Schoolclass_Details&school_class_id={{ selected_schoolclass.getSchoolClassId() }}', '', 1, 'main', 'main');
+} else {
+    document.querySelector('#frmAddStudent').reportValidity();
+    toastr.info("Bitte füllen Sie alle erforderlichen Felder aus, um einen Schüler hinzuzufügen.");
+}
+
+});
+
+/* Update School Class */
+
+$("#btnUpdateSchoolClass").click(function() {  
+
+var class_name = $( ".input-class-name" ).val();
+var class_enrollment_year = $( ".select-class-enrollment-year" ).val();
+var class_level = $( ".select-class-level" ).val();
+
+if (class_name !== '' && class_level !== '' && class_enrollment_year != '') {
+    $("h1.class-name").html('Klasse ' + class_name + ' des Jahrgangs ' + class_enrollment_year); 
+    submit("#frmUpdateSchoolClass", "Die Klasse wurde erfolgreich verändert.");
+} else {
+    document.querySelector('#frmUpdateSchoolClass').reportValidity();
+    toastr.info("Bitte füllen Sie alle erforderlichen Felder aus, um die Klasse zu verändern.");
+}
+
+});
+
+
+/* __________________________ Subviews (Blocks) ________________________________ */
+
+/* Delete Student */
+
+$('html').on( "click", "#btnDeleteStudent", function() { // hack to only register once
+
+var delete_student = $( ".select-delete-student" ).val();
+
+if (delete_student !== null) {
+    submit("#frmDeleteStudent", "Der ausgewählte Schüler wurde entfernt.");
+    directRouting('index.php?function=Schoolclass_Details&school_class_id={{ selected_schoolclass.getSchoolClassId() }}', '', 1, 'main', 'main');
+} else {
+    document.querySelector('#frmDeleteStudent').reportValidity();
+    toastr.info("Bitte selektieren Sie einen Schüler, den Sie entfernen möchten.");
+}
+
+});
+
+/* Delete School Class */
+
+$("input").click(function(){
+    console.log($(this)[0].checked);
+});
+
+$('html').on( "click", "#btnDeleteClass", function() { // hack to only register once
+    if ($('.checkbox-approve').is(":checked")) {
+        try {
+        submit("#frmDeleteClass", "Die ausgewählte Schulklasse wurde entfernt.");
+        directRouting('index.php?function=my_classes', '', 1, 'main', 'main');
+        } catch (ex) {
+            toastr.error("Es ist ein Fehler beim Entfernen der Schulklasse aufgetreten");
+            directRouting('index.php?function=my_classes', '', 1, 'main', 'main');
+        }
+    } else {
+        toastr.info("Bitte bestätigen Sie den Löschvorgang, indem Sie ein Häkchen setzen.");
+        toastr.error("Die Klasse wurde nicht entfernt.");
+    }
+});
+
+</script>

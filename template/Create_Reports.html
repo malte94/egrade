@@ -1,0 +1,142 @@
+{% include 'Header.html' %}
+<main>
+
+    <div class="grid-reports">
+
+        <!-- Column Students (Left) -->
+
+        <div class="col-students">
+
+            <div class="content-wrapper">
+                
+            <h2>Einstellungen</h2>
+            <p class="smaller-text">Ausgewählt ist <a href="{{ urlSchoolClassDetails }}" class="reports-select-class font-weight-bold">Klasse {{selectedSchoolClass.getSchoolClassName}}</a> des Schuljahres {{selectedSchoolClass.getEnrollmentYear}}.</p>
+            
+            {% if selectedStudent is not empty %}
+
+            {% if schoolTemplateDefined != 0 %}
+
+            <div class="students-table-header">
+                <span>Sch&uuml;ler</span>
+                <span>Status</span>
+            </div>
+
+            <table class="students-table">
+                <tbody>
+                {% for student in students %}
+                {% if selectedStudent == student %}
+                <tr>
+                    <td><a href="{{urlReport}}{{student.getStudentID}}" class="selected-student font-weight-bold">{{student.getFirstname}} {{student.getLastname}}</a></td>
+                    <td><span class="material-icons align-baseline current-status-span">clear</span></td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td><a href="{{urlReport}}{{student.getStudentID}}">{{student.getFirstname}} {{student.getLastname}}</a></td>
+                    <td><span class="material-icons align-baseline">clear</span></td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+            
+            <div class="notification-box info"></div>
+            
+            {% endif %}
+            
+            {% endif %}
+        
+            <button type="button" class="btn-egrade btn-class icon"> <span class="material-icons"> people_alt </span> Klasse ändern</button>
+
+            {% if schoolTemplateDefined != 0 %}
+
+            {% if selectedStudent is not empty %}
+       
+            <h2 class="mt-4">Zeugnis verwalten</h2>
+
+            <button class="btn-egrade btn-print-report icon"> <span class="material-icons">print</span> Drucken</button>
+
+            <button type="button" class="btn-egrade btn-class-variables icon"> <span class="material-icons"> build </span> Felder anpassen</button>
+
+            <!-- <button type="button" class="btn-egrade icon"> <span class="material-icons"> spellcheck </span> Textbausteine </button> -->
+            
+            <button type="button" class="btn-egrade btn-red icon btn-delete-report"> <span class="material-icons"> delete </span> Zeugnis entfernen</button>
+
+            {% endif %}
+
+            {% endif %}
+        
+            </div>
+
+        </div>
+
+        {% if schoolTemplateDefined == 0 %}
+
+        <div class="p-4">
+            <p>Für diese Klassenstufe, bzw. dieses Halbjahr, wurde noch kein Zeugnis-Template definiert. Setzen Sie gegebenenfalls Schulleitung oder Administrator in Kenntnis. Diese Einstellung kann über <b>Schule verwalten</b> vorgenommen werden.</p>
+        </div>
+
+        {% else %}
+
+        {% if schoolClasses is empty %}
+
+        <div class="p-4">
+            <p>Sie haben noch keine Klasse angelegt und können daher keine Zeugnisformulare erstellen.</p> 
+            <a class="btn-egrade" href="{{urlClasses}}">Klassen verwalten</a>
+        </div>
+
+        {% elseif selectedStudent is empty %}
+
+        <div class="p-4">
+            <p>Es wurden bisher keine Schüler zu der ausgewählten <b>Klasse {{selectedSchoolClass.getSchoolClassName}}</b> zugeordnet. Bitte wählen Sie eine andere Klasse oder legen Sie neue Schüler an. </p> 
+            <a class="btn-egrade" href="{{urlClasses}}">Klassen verwalten</a>
+        </div>
+
+        {% else %}
+
+        <form id="{{ school_class_template.getTemplateModuleName }}" method="POST" action="#"> 
+
+            <div class="col-reports">
+                
+                <div class="box flex-100 box-highlighted icon icon-edit {{ school_class_template.getTemplateModuleName }}">
+                    <h2 class="larger">Zeugnis schreiben</h2>
+                    <p class="line-height-2">Sie bearbeiten das Zeugnis von <b> <a href="{{urlStudentProfile}}{{selectedStudent.getStudentId}}">{{selectedStudent.getFirstname}} {{selectedStudent.getLastname}}</a></b>. Auf der verlinkten Profilseite können Sie diesen Schüler konfigurieren.
+                    Ausgewähltes Template: <b>{{ school_class_template.getTemplateDisplayName }}</b>. Sie bearbeiten ein Zeugnis für <b>Klasse {{selectedSchoolClass.getSchoolClassName}}.</b></p>  
+                    <button type="button" class="btn-egrade plain btn-student-variables icon"> <span class="material-icons"> build </span> Felder für diesen Schüler anpassen</button>
+                </div>
+
+            {{ module_content | raw }}
+
+            </div>
+
+        </form>
+
+        <!-- Column pdf.js Preview (Right) -->
+
+        <div class="col-print-preview">
+            <div class="din-a4">
+                <span class="load-preview"></span>
+                <canvas id="din-a4"></canvas>
+                <span id="print-preview"></span>
+            </div>
+            <div class="pdf-pages">
+                <div id="pdf-prev"><span class="material-icons">navigate_before</span></div>
+                <div id="pdf-num"></div>&nbsp;/&nbsp;<div id="pdf-counter"></div>
+                <div id="pdf-next"><span class="material-icons">navigate_next</span></div>
+            </div>
+        </div>
+
+        {% endif %}
+
+        {% endif %}
+        
+        <!-- JavaScript -->
+
+        {% include 'Create_Reports_js.html' %}
+
+    </div>
+
+    </div>
+
+</main>
+
+{% include 'Footer.html' %}

@@ -1,0 +1,191 @@
+<div class="dialogue admin-school">
+    <div class="dialogue-content admin-school-content lg full-mobile">
+        <span class="dialogue-icon-close"></span>
+        <div class="flex-row">
+            <div class="box flex-50">
+                <h2>Verwaltung</h2>
+                <form id="updateSchoolName" method="POST" action="index.php?function=Admin_School&action=updateSchoolName&is_ajax=1">
+                    <p>Verändern Sie den <b>Schulnamen</b> bei Bedarf.</p>
+                    <div>
+                        <direct-label class="w-33">Name</direct-label>
+                        <input type="text" name="school_name" class="input-egrade input-school-name" required placeholder="" value="{{ global_School_Name }}">
+                    </div> 
+                        <button type="button" class="btn-egrade" id="btnUpdateSchoolName">Namensänderung speichern</button>
+                </form>
+                <form id="admin_colleague">
+                    <h2 class="mt-4">Kollegen bei eGrade anmelden</h2>
+                    <p>Wenn ein neuer Kollege Zugang zu eGrade benötigt, melden Sie ihn über dieses Formular an.</p>
+                    <div>
+                        <direct-label class="w-33">Vor- und Zuname</direct-label>
+                        <input type="text" class="input-egrade" name="admin_colleague" />
+                    </div>
+                    <div>
+                        <direct-label class="w-33">E-Mail-Adresse</direct-label>
+                        <input type="text" class="input-egrade mt-2" name="admin_colleague"/>
+                    </div>
+                    <button type="submit" class="btn-egrade" name="action" value="">Registrierung absenden</button>
+                </form>
+            </div>
+            <div class="box flex-50 box-template-config">
+                <form id="updateSchoolTemplates" action="index.php?function=Admin_School&action=updateSchoolTemplate&is_ajax=1" method="post">
+                    <h2>Templates konfigurieren</h2>
+                    <p>Selektieren Sie Templates für Ihre Schule. Je nach Konfiguration haben Sie die Möglichkeit das Template weiter zu individualisieren. </p>
+
+                    <h3>Klassenstufe 1, Halbjahr 1</h3>
+                    <div>
+                        <direct-label class="w-50">Template zuweisen</direct-label>
+                        <select class="input-egrade w-50" name="admin_change_template[]">
+
+                            <option value="" disabled>Template selektieren ...</option>
+                            <option value="-1">Kein Template ausgewählt</option>
+                            {% for installed_template in installed_school_templates %}
+                                <option {% if class_1_0.getId == installed_template.getId %} selected {% endif %} value="{{ installed_template.getId }}">{{ installed_template.getTemplateDisplayName }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    {% for class_1_0_var in class_1_0_vars %}
+                    {{ class_1_0_var | raw }}
+                    {% endfor %}
+                    
+                    <hr>
+
+                    <h3>Klassenstufe 1, Halbjahr 2</h3>
+                    <div>
+                        <direct-label class="w-50">Template zuweisen</direct-label>
+                        <select class="input-egrade w-50"name="admin_change_template[]">
+
+                            <option value="" disabled>Template selektieren ...</option>
+                            <option value="-1">Kein Template ausgewählt</option>
+                            {% for installed_template in installed_school_templates %}
+                            <option {% if class_1_1.getId == installed_template.getId %} selected {% endif %} value="{{ installed_template.getId }}">{{ installed_template.getTemplateDisplayName }}</option>
+                            {% endfor %}
+
+                        </select>
+                    </div>
+                    {% for class_1_1_var in class_1_1_vars %}
+                    {{ class_1_1_var | raw }}
+                    {% endfor %}
+
+                    <hr>
+
+                    <h3>Klassenstufe 2, Halbjahr 1</h3>
+                    <div>
+                        <direct-label class="w-50">Template zuweisen</direct-label>
+                        <select class="input-egrade w-50" name="admin_change_template[]">
+                            <option value="" disabled>Template selektieren ...</option>
+                            <option value="-1">Kein Template ausgewählt</option>
+                            {% for installed_template in installed_school_templates %}
+                            <option {% if class_2_0.getId == installed_template.getId %} selected {% endif %} value="{{ installed_template.getId }}">{{ installed_template.getTemplateDisplayName }}</option>
+                            {% endfor %}
+
+                        </select>
+                    </div>
+                    {% for class_2_0_var in class_2_0_vars %}
+                    {{ class_2_0_var | raw }}
+                    {% endfor %}
+
+                    <hr>
+
+                    <h3>Klassenstufe 2, Halbjahr 2</h3>
+                    <div>
+                        <direct-label class="w-50">Template zuweisen</direct-label>
+                        <select class="input-egrade w-50" name="admin_change_template[]">
+
+                            <option value="" disabled>Template selektieren ...</option>
+                            <option value="-1">Kein Template ausgewählt</option>
+                            {% for installed_template in installed_school_templates %}
+                            <option {% if class_2_1.getId == installed_template.getId %} selected {% endif %} value="{{ installed_template.getId }}">{{ installed_template.getTemplateDisplayName }}</option>
+                            {% endfor %}
+
+                        </select>
+                    </div>
+                    {% for class_2_1_var in class_2_1_vars %}
+                    {{ class_2_1_var | raw }}
+                    {% endfor %}
+
+                    <hr>
+
+                    <h3>Klassenstufe 3, Halbjahr 1</h3>
+                    <div>
+                        <direct-label class="w-50">Template zuweisen</direct-label>
+                        <select class="input-egrade w-50" name="admin_change_template[]">
+
+                            <option value="" disabled>Template selektieren ...</option>
+                            <option value="-1">Kein Template ausgewählt</option>
+                            {% for installed_template in installed_school_templates %}
+                            <option {% if class_3_0.getId == installed_template.getId %} selected {% endif %} value="{{ installed_template.getId }}">{{ installed_template.getTemplateDisplayName }}</option>
+                            {% endfor %}
+
+                        </select>
+                    </div> 
+                    {% for class_3_0_var in class_3_0_vars %}
+                    {{ class_3_0_var | raw }}
+                    {% endfor %}
+
+                    <hr>
+
+                    <h3>Klassenstufe 3, Halbjahr 2</h3>
+                    <div>
+                        <direct-label class="w-50">Template zuweisen</direct-label>
+                        <select class="input-egrade w-50" name="admin_change_template[]">
+
+                            <option value="" disabled>Template selektieren ...</option>
+                            <option value="-1">Kein Template ausgewählt</option>
+                            {% for installed_template in installed_school_templates %}
+                            <option {% if class_3_1.getId == installed_template.getId %} selected {% endif %} value="{{ installed_template.getId }}">{{ installed_template.getTemplateDisplayName }}</option>
+                            {% endfor %}
+
+                        </select>
+                    </div>
+                    {% for class_3_1_var in class_3_1_vars %}
+                    {{ class_3_1_var | raw }}
+                    {% endfor %}
+
+                    <hr>
+
+                    <h3>Klassenstufe 4, Halbjahr 1</h3>
+                    <div>
+                        <direct-label class="w-50">Template zuweisen</direct-label>
+                        <select class="input-egrade w-50" name="admin_change_template[]">
+
+                            <option value="" disabled>Template selektieren ...</option>
+                            <option value="-1">Kein Template ausgewählt</option>
+                            {% for installed_template in installed_school_templates %}
+                            <option {% if class_4_0.getId == installed_template.getId %} selected {% endif %} value="{{ installed_template.getId }}">{{ installed_template.getTemplateDisplayName }}</option>
+                            {% endfor %}
+
+                        </select>
+                    </div>
+                    {% for class_4_0_var in class_4_0_vars %}
+                    {{ class_4_0_var | raw }}
+                    {% endfor %}
+
+                    <hr>
+
+                    <h3>Klassenstufe 4, Halbjahr 2</h3>
+                    <div>
+                        <direct-label class="w-50">Template zuweisen</direct-label>
+                        <select class="input-egrade w-50" name="admin_change_template[]">
+
+                            <option value="" disabled>Template selektieren ...</option>
+                            <option value="-1">Kein Template ausgewählt</option>
+                            {% for installed_template in installed_school_templates %}
+                            <option {% if class_4_1.getId == installed_template.getId %} selected {% endif %} value="{{ installed_template.getId }}">{{ installed_template.getTemplateDisplayName }}</option>
+                            {% endfor %}
+
+                        </select>
+                    </div> 
+                    {% for class_4_1_var in class_4_1_vars %}
+                    {{ class_4_1_var | raw }}
+                    {% endfor %}
+
+                    <hr>
+
+                    <button type="button" class="btn-egrade" id="btnUpdateSchoolTemplates">Templates speichern</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% include 'Admin_School_js.html' %}
+</div>

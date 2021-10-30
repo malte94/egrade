@@ -1,0 +1,68 @@
+{% include 'Header.html' %}
+<main>
+    <div class="grid-shared-reports">
+        <div class="col-shared-sidebar">
+            <div class="content-wrapper">
+                <h2>Schüler</h2>
+                <p>Ausgewählt ist <a href="" class="reports-select-class font-weight-bold">Klasse {{selectedSchoolClass.getSchoolClassName}}</a> des Schuljahres {{selectedSchoolClass.getEnrollmentYear}} des Lehrers.</p>
+                {% if selectedStudent is not empty %}
+                <table>
+                    <tbody>
+                    <tr>
+                        <th>Sch&uuml;ler</th>
+                        <th>Status</th>
+                    </tr>
+                    {% for student in students %}
+                    {% if selectedStudent == student %}
+                    <tr>
+                        <td><a href="{{urlReport}}{{student.getStudentID}}" class="font-weight-bold">{{student.getFirstname}} {{student.getLastname}}</a></td>
+                        <td>&#xE834;</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td><a href="{{urlReport}}{{student.getStudentID}}">{{student.getFirstname}} {{student.getLastname}}</a></td>
+                        <td>&#xE834;</td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            
+                <div class="notification-box info"></div>
+                {% endif %}
+            
+                <button type="submit" class="btn-shared">Freigaben</button>
+                {% if selectedStudent is not empty %}
+                <button class="btn-magnify">Vorschau</button>
+                <button type="submit" class="btn-print" onclick="window.open('{{urlReport}} + &printGrade=1');">Drucken</button>
+                <!--<button type="submit" name="Speichern" form="{{ school_class_template.getTemplateModuleName }}" class="btn-save">Synchronisieren</button>-->
+                {% endif %}
+                <!-- div class="table report-info mt-2">
+                    <span>
+                        <p class="report-conference mt-0 mb-0"><b>Zeugniskonferenz</b> <br> 21. Mai 2020</p>
+                    </span>
+                    <span>
+                        <p class="report-release mt-0"><b>Ausgabedatum</b> <br> 23. Juni 2020</p>
+                    </span>   
+                </div> -->
+            </div>
+        </div>
+
+        <div class="col-shared-content">
+            <div class="box flex-100 accent-1">
+                <h2>Zeugnisfreigaben verwalten</h2>
+                <p>Sie sind im Begriff freigegebene Zeugnisfelder eines Kollegen zu bearbeiten. <br> 
+                    Ausgewählt ist der Schüler <b>student_name</b> des Kollegen <b>colleague_name</b> der Klasse <b>class_name</b>.</p>
+            </div>
+            <div class="box">
+                <h2>Lern-, Arbeits- und Sozialverhalten</h2>
+                <textarea id="template-rlp-1-lernverhalten" rows="5" cols="30" placeholder="Bisher noch keine Eingabe ..."></textarea>
+            </div>
+            <div class="box">
+                <h2>Deutsch & Sachunterricht</h2>
+                <textarea id="template-rlp-1-deutsch" rows="5" cols="30" placeholder="Bisher noch keine Eingabe ..."></textarea>
+            </div>
+        </div>
+    </div>
+</main>
+{% include 'Footer.html' %}

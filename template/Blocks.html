@@ -1,0 +1,151 @@
+<!-- _________________________________________________________ Create_Reports ____________________________________________________________________ -->
+
+{% block create_reports_classes %}
+
+<div class='dialogue'>
+  <div class='dialogue-content'>
+    <span class="dialogue-icon-close small"></span>
+        <h2>Klasse auswählen</h2>
+            {% for schoolClass in schoolClasses|sort((a, b) => a.getSchoolClassName <=> b.getSchoolClassName) %}
+            <a class="btn-egrade btn btn-light btn-lg btn-block" href="{{ routeUrl }}&school_class_id={{ schoolClass.getSchoolClassId() }}">Klasse {{  schoolClass.getSchoolClassName() }} ({{ schoolClass.getEnrollmentYear }})</a>
+            {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
+
+{% block create_reports_print_report %}
+
+<div class='dialogue print-reports'>
+  <div class='dialogue-content md'>
+    <span class="dialogue-icon-close small"></span>
+
+        <h2>Drucken & Exportieren</h2>
+        <p>Was möchten Sie tun?</p>
+        <button class="btn-egrade print-this-report icon" onclick="window.open('{{urlReport}}{{selectedStudent.getStudentID}}&printGrade=1'.replace(/&amp;/g,'&'));"> <span class="material-icons"> print </span> Dieses Zeugnis drucken</button>
+        <button class="btn-egrade print-all-reports icon" onclick="window.open('{{urlReport}}{{selectedStudent.getStudentID}}&action=createReportsBatch'.replace(/&amp;/g,'&'));"> <span class="material-icons"> file_copy </span> Alle Zeugnisse speichern (.zip)</button>
+
+    </div>
+</div>
+
+{% endblock %}
+
+{% block create_reports_template_variables_class %}
+
+<div class='dialogue class-template-variables'>
+  <div class='dialogue-content md'>
+    <span class="dialogue-icon-close small"></span>
+
+        <h2>Zeugnisfelder klassenweit anpassen</h2>
+
+            {% if template_vars is not empty %}
+
+            <p>Felder, die Sie im Folgenden anpassen, werden für <b>alle aktuellen Zeugnisse dieser Klasse</b> übernommen und überschreiben schulweite Einstellungen.</p>
+
+            {% for template_var in template_vars %}
+
+                {{ template_var | raw }}
+
+            {% endfor %}
+            
+            <button class="btn-egrade close-variables-dialogue icon"> <span class="material-icons"> close </span> Schließen</button>
+            <button class="btn-egrade icon"> <span class="material-icons"> undo </span> Zurücksetzen</button>
+
+            {% else %}
+
+            <p>Für diese Zeugnisvorlage können leider keine Felder angepasst werden.</p>
+
+            {% endif %}
+
+    </div>
+</div>
+
+{% endblock %}
+
+{% block create_reports_template_variables_student %}
+
+<div class='dialogue student-template-variables'>
+    <div class='dialogue-content md'>
+        <span class="dialogue-icon-close small"></span>
+
+        <h2>Zeugnisfelder für diesen Schüler anpassen</h2>
+
+        {% if template_vars is not empty %}
+
+        <p>Felder, die Sie im Folgenden anpassen, sind <b>nur für diesen Schüler gültig</b> und überschreiben sowohl klassenweite, als auch schulweite Einstellungen.</p>
+
+        {% for template_var in template_vars %}
+
+        {{ template_var | raw }}
+
+        {% endfor %}
+
+        <button class="btn-egrade close-variables-dialogue icon"> <span class="material-icons"> close </span> Schließen</button>
+        <button class="btn-egrade icon"> <span class="material-icons"> undo </span> Zurücksetzen</button>
+
+        {% else %}
+
+        <p>Für diese Zeugnisvorlage können leider keine Felder angepasst werden.</p>
+
+        {% endif %}
+
+    </div>
+</div>
+
+{% endblock %}
+
+{% block create_reports_delete_report %}
+
+<div class='dialogue'>
+<div class='dialogue-content md'>
+        <h2>Zeugnis entfernen</h2>
+        Sind Sie sicher, dass Sie das aktuell ausgewählte Zeugnis entfernen möchten? Dieser Vorgang ist irreversibel.
+          <div class="mt-3">
+            <label class="egrade-checkbox">
+              Ich bestätige diesen Vorgang
+            <input type="checkbox" name="checkbox-approve" id="checkbox-approve" value="0" class="checkbox-approve"></input>
+            <span class="checkmark"></span>
+          </label>
+          </div>
+        <button type="button" class="btn-egrade close-message">Abbrechen</button>
+        <button type="button" class="btn-egrade btn-danger submit-message mt-3" name="action" id="btnDeleteReport" value="">Ja</button>
+</div>
+</div>
+
+{% endblock %}
+
+<!-- _________________________________________________________ Schoolclass_Details ____________________________________________________________________ -->
+
+{% block schoolclass_details_class_remove %}
+
+<div class='dialogue'>
+<div class='dialogue-content'>
+        <h2>Klasse entfernen</h2>
+        Sind Sie sicher, dass Sie die aktuelle Klasse entfernen möchten? Dadurch werden sämtliche Schüler und Zeugnisse <b>unwiderruflich entfernt</b>, die Bestandteil dieser Klasse sind.
+          <div class="mt-3">
+            <label class="egrade-checkbox">
+              Ich bestätige diesen Vorgang
+            <input type="checkbox" name="checkbox-approve" id="checkbox-approve" value="0" class="checkbox-approve"></input>
+            <span class="checkmark"></span>
+          </label>
+          </div>
+        <button type="button" class="btn-egrade close-message">Abbrechen</button>
+        <button type="button" class="btn-egrade btn-danger submit-message mt-3" name="action" id="btnDeleteClass" form="frmDeleteClass" value="">Ja</button>
+</div>
+</div>
+
+{% endblock %}
+
+{% block schoolclass_details_student_remove %}
+
+<div class='dialogue'>
+  <div class='dialogue-content'>
+        <h2>Schüler entfernen</h2>
+        Sind Sie sicher, dass Sie den ausgewählten Schüler entfernen möchten? Es gehen dabei alle Informationen und Zeugnisdaten verloren.
+        <br>
+        <button type="button" class="btn-egrade close-message">Abbrechen</button>
+        <button type="button" class="btn-egrade btn-danger submit-message mt-3" name="action" id="btnDeleteStudent" form="frmDeleteStudent" value="">Ja</button>
+</div>
+</div>
+
+{% endblock %}

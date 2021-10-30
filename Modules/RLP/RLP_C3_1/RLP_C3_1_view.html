@@ -1,0 +1,118 @@
+<!-- Template RLP_C3_1 -->
+
+<div class="box flex-100 table-competences">
+    
+    <div class="grades-container">
+
+        <h2>Hauptfächer</h2>
+
+        <table class="table-grades">
+            <tbody>
+
+            <tr>             
+                <!-- Left Column Grade -->
+
+                <td>Mathematik</td>
+                <td class="final-grade" name="grade_mathe" colspan="5"></td>
+                <input type="hidden" name="grade_mathe" value=""></input>
+                
+                <!-- Right Column Grade -->
+                <td>Deutsch</td>
+                <td class="final-grade" name="grade_deutsch" colspan="5"></td>
+                <input type="hidden" name="grade_deutsch" value=""></input>
+            </tr>
+
+            <tr>
+                <!-- Left Column Grade -->
+                <td>Englisch</td>
+                <td class="final-grade" name="grade_englisch" colspan="5"></td>
+                <input type="hidden" name="grade_englisch" value=""></input>
+                
+            </tr>
+
+            </tbody>
+
+        </table>
+
+        <h2>Nebenfächer</h2>
+
+        <table class="table-grades">
+
+            <tbody>
+
+            <tr>
+                <!-- Left Column Grade -->
+                <td>Sachunterricht</td>
+                <td class="final-grade" name="grade_sachunterricht" colspan="5"></td>
+                <input type="hidden" name="grade_sachunterricht" value=""></input>
+                
+                <!-- Right Column Grade -->
+                <td>Religion/Ethik</td>
+                <td class="final-grade" name="grade_ethik" colspan="5"></td>
+                <input type="hidden" name="grade_ethik" value=""></input>
+            </tr>
+
+            <tr>
+                <!-- Left Column Grade -->
+                <td>Musik</td>
+                <td class="final-grade" name="grade_musik" colspan="5"></td>
+                <input type="hidden" name="grade_musik" value=""></input>
+                
+                <!-- Right Column Grade -->
+                <td>Sport</td>
+                <td class="final-grade" name="grade_sport" colspan="5"></td>
+                <input type="hidden" name="grade_sport" value=""></input>
+            </tr>
+
+            <tr>
+                <!-- Left Column Grade -->
+                <td>Bildende Kunst</td>
+                <td class="final-grade" name="grade_kunst" colspan="5"></td>
+                <input type="hidden" name="grade_kunst" value=""></input>
+                
+                <!-- Right Column Grade -->
+                <td>Schrift</td>
+                <td class="final-grade" name="grade_schrift" colspan="5"></td>
+                <input type="hidden" name="grade_schrift" value=""></input>
+            </tr>
+            
+            </tbody>
+
+        </table>
+
+    </div>   
+</div> 
+
+<div class="box">
+    <div class="share"></div>
+    <h2>Arbeits- und Sozialverhalten</h2>
+    <div>
+    <textarea class="defaultEditor" rows="5" cols="30" name="lern_arbeits_und_sozialverhalten" placeholder="Bisher noch keine Eingabe ...">{{ model.getLernArbeitsUndSozialVerhalten }}</textarea>
+    </div>
+</div>
+
+<div class="box">
+    <div class="share"></div>
+    <h2>Leistungsentwicklung</h2>
+    <div>
+    <textarea class="defaultEditor" rows="5" cols="30" name="leistungsentwicklung" placeholder="Bisher noch keine Eingabe ...">{{ model.getLeistungsentwicklung }}</textarea>
+    </div>
+</div>
+
+<div class="box flex-100">
+    <h2>Fehlzeiten</h2>
+    Es wurden ... <input type="number" value="{{ model.getFehlzeitenEntschuldigt }}" max="180" name="fehlzeiten_entschuldigt" class="input-egrade input-small"></input> Fehltage verzeichnet. Davon sind <input type="number" value="{{ model.getFehlzeitenUnentschuldigt }}" max="180" name="fehlzeiten_unentschuldigt" maxlength="2" class="input-egrade input-small"></input> Fehltage unentschuldigt.
+</div>
+
+
+
+<!-- ____________________________________________ JAVASCRIPT __________________________________________ -->
+
+
+<script type="module">
+
+getReportData();
+
+clickGrades();
+
+</script>

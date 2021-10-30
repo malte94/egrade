@@ -1,0 +1,25 @@
+<script type="module">
+
+$( "direct-label" ).click(function() {
+    $(this).next('input').select();
+    console.log("Selected nearest input field.");
+});
+
+$("#btnAddClass").click(function() {  
+
+var enrollment_year = $( ".select-class-enrollment-year" ).val();
+var class_level = $( ".input-class-level" ).val();
+var class_name = $( ".input-class-name" ).val();
+var is_halfyear = $( ".input-is-halfyear" ).val();
+
+if (enrollment_year !== '' && class_level !== '' && class_name != ''  && is_halfyear != '') {
+    submit("#frmAddClass", "Klasse " + class_name + " wurde angelegt.");
+    directRouting('index.php?function=my_classes', '', 1, 'main', 'main');
+} else {
+    document.querySelector('#frmAddClass').reportValidity();
+    toastr.info("Bitte füllen Sie alle erforderlichen Felder aus, um eine Klasse anzulegen.");
+}
+
+});
+
+</script>

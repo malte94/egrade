@@ -1,0 +1,65 @@
+<div class="dialogue">
+    <div class="dialogue-content absences-content md full-mobile">
+        <span class="dialogue-icon-close"></span>
+            <div class="box">
+                <h2>Abwesenheit melden</h2>
+                <p>Sind Sie erkrankt oder anderweitig verhindert, können Sie hier wahlweise Schulleitung oder alle Kollegen über Ihre Abwesenheit in Kenntnis setzen.</p>
+                <form id="frmAbsences" action="index.php?function=Absences&action=addAbsence">
+                    <div>
+                        <direct-label class="w-33">Grund</direct-label>
+                        <input type="text" class="input-egrade input-reason" name="reason" required />
+                    </div>
+                    <div>
+                        <direct-label class="w-33">Ab</direct-label>
+                        <input type="date" class="input-egrade input-date-from" name="date_from" required />
+                    </div>
+                    <div>
+                        <direct-label class="w-33">Bis</direct-label>
+                        <input type="date" class="input-egrade input-date-to" name="date_to" required />
+                    </div>
+                    <div class="d-lg-inline m-1">
+                        <input type="radio" name="exampleRadios"  id="exampleRadios1" value="option1" checked>
+                        <label for="exampleRadios1">Schulleitung informieren</label>
+                    </div>
+                    <div class="d-lg-inline m-1 ml-lg-3">
+                        <input type="radio" name="exampleRadios" id="exampleRadios2" value="option2" checked>
+                        <label for="exampleRadios2">Kollegium informieren</label>
+                    </div>
+                    <div>
+                        <button type="button" class="btn-egrade btn-attest mt-3 mobile-w-100" id="btnAttest">Attest hinterlegen</button>
+                        <button type="button" class="btn-egrade btn-absence mobile-w-100" id="btnAbsences">Abwesenheit melden</button>
+                    </div>
+                </form>
+                <h3 class="mt-4">Ihr Protokoll</h3>
+                <div class="grid-table table-col-3">
+                    <span>
+                    <strong>Grund</strong>
+                    </span>
+                    <span>
+                    <strong>Ab</strong>
+                    </span>
+                    <span>
+                    <strong>Bis</strong>
+                    </span>
+
+                    {% for absence in absences|sort((b, a) => a.Date_To <=> b.Date_From) %}
+
+                        <span>
+                        {{ absence.Reason }}
+                        </span>
+
+                        <span>
+                        {{ absence.Date_From|date("d.m.Y") }}
+                        </span>
+
+                        <span>
+                        {{ absence.Date_To|date("d.m.Y") }}
+                        </span>
+
+                    {% endfor %}
+
+                </div>
+            </div>
+    </div>
+    {% include 'Absences_js.html' %}
+</div> 

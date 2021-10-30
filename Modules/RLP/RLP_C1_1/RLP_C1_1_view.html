@@ -1,0 +1,50 @@
+<!-- Template RLP_C1_1 -->
+
+<div class="box">
+    <div class="share"></div>
+    <h2>Arbeits- und Sozialverhalten</h2>
+    <div>
+    <textarea class="defaultEditor" name="lern_arbeits_und_sozialverhalten" placeholder="Bisher noch keine Eingabe ...">{{ model.getLernArbeitsUndSozialVerhalten }}</textarea>
+    </div>
+</div>
+
+<div class="box">
+    <div class="share"></div>
+    <h2>Deutsch und Sachkunde</h2>
+    <textarea class="defaultEditor" name="deutsch_sachunterricht" placeholder="Bisher noch keine Eingabe ...">{{ model.getDeutschSachunterricht }}</textarea>
+</div>
+
+<div class="box">
+    <div class="share"></div>
+    <h2>Mathematik</h2>
+    <textarea class="defaultEditor" name="mathematik" placeholder="Bisher noch keine Eingabe ...">{{ model.getMathematik }}</textarea>
+</div>
+
+<div class="box">
+    <div class="share"></div>
+    <h2>Religion</h2>
+    <textarea class="defaultEditor" name="religion" placeholder="Bisher noch keine Eingabe ...">{{ model.getReligion }}</textarea>
+</div>
+
+<div class="box">
+    <div class="share"></div>
+    <h2>Musik & Sport</h2>
+    <textarea class="defaultEditor" name="musik_sport" placeholder="Bisher noch keine Eingabe ...">{{ model.getMusikSport }}</textarea>
+</div>
+
+<div class="box">
+    <div class="share"></div>
+    <h2>Bemerkungen</h2>
+    <textarea class="defaultEditor" name="bemerkungen" placeholder="Bisher noch keine Eingabe ...">{{ model.getBemerkungen }}</textarea>
+</div>
+
+<div class="box">
+    <div class="share"></div>
+    <h2>Leistungsentwicklung</h2>
+    <textarea class="defaultEditor" name="leistungsentwicklung" placeholder="Bisher noch keine Eingabe ...">{{ model.getLeistungsentwicklung }}</textarea>
+</div>
+
+<div class="box">
+    <h2>Fehlzeiten</h2>
+    Es wurden ... <input type="number" value="{{ model.getFehlzeitenEntschuldigt }}" max="180" name="fehlzeiten_entschuldigt" id="template-rlp-1-fehlzeiten-entschuldigt" class="input-egrade input-small"></input> Fehltage verzeichnet. Davon sind <input type="number" value="{{ model.getFehlzeitenUnentschuldigt }}" max="180" name="fehlzeiten_unentschuldigt" id="template-rlp-1-fehlzeiten-unentschuldigt" maxlength="2" class="input-egrade input-small"></input> Fehltage unentschuldigt.
+</div>

@@ -1,0 +1,167 @@
+{% include 'Header.html' %}
+<main>
+    <h1 class="mt-4 mb-1 ml-3 ml-lg-4 class-name">Klasse {{selected_schoolclass.getSchoolClassName}} des Jahres {{selected_schoolclass.getEnrollmentYear}}</h1>
+    <div class="grid-school-class-details">
+    <div class="box icon icon-manage">
+        <h2>Schüler verwalten</h2>
+        <p>Dies ist eine Übersicht über diese Klasse und derer Schüler.</p>
+            <div class="grid-table table-col-4 student-list">
+            <span>
+                <strong>Vorname</strong>
+            </span>
+            <span>
+                <strong>Nachname</strong>
+            </span>
+            <span>
+                <strong>geboren</strong>
+            </span>
+            <span>
+
+            </span>
+
+        {% for student in students %}
+        <span><a href="?function=Student_Details&school_class_id={{selected_schoolclass.getSchoolClassId}}&student_id={{student.getStudentID}}">{{student.getFirstname}}</a></span>
+        <span class="">{{student.getLastname()}}</span>
+        <span>{{ student.getDateOfBirth | date("d.m.Y") }}</span>
+        <span class="student-picture"><img src="template/img/rayman.PNG"></span>
+        {% endfor %}
+
+        </div>
+    </div>
+    <div class="box icon icon-edit">
+        <h2>Klasse verwalten</h2>
+        <p>Hier können Sie die ausgewählte Klasse verändern. Schüler und bearbeitete Zeugnisse einer respektiven Stufe bleiben erhalten.</p>
+        <form id="frmUpdateSchoolClass" action="index.php?function=Schoolclass_Details&school_class_id={{ selected_schoolclass.getSchoolClassId() }}&action=updateSchoolClass" method="POST">
+            <div>
+                <direct-label class="w-33">Kürzel der Klasse</direct-label>
+                <input type="text" name="class_name" class="input-egrade input-class-name" placeholder="Neues Kürzel hier eingeben ..." value="{{ selected_schoolclass.getSchoolClassName }}" required/>
+            </div>
+            <div>
+                <direct-label class="w-33">Klassenstufe</direct-label>
+                <select name="class_level" class="input-egrade select-class-level" required>
+                    <option value="" disabled selected>Neue Klassenstufe auswählen ...</option> {{ selected_schoolclass.getSchoolClassLevel }}
+                    {% for i in 1..4 %}
+                    {% if i == selected_schoolclass.getSchoolClassLevel %}
+                    <option selected>{{ i }}</option>
+                    {% else %}
+                    <option>{{ i }}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            <div>
+                <direct-label class="w-33">Einschulungsjahr</direct-label>
+                <select name="class_enrollment_year" class="input-egrade select-class-enrollment-year" required>
+                    <option value="" disabled selected>Neue Einschulung auswählen ...</option>
+                    {% for i in -5..10 %}
+                    {% if actualYear|date_modify("+1 year")|date("Y")+i == selected_schoolclass.getEnrollmentYear %}
+                    <option selected value="{{ actualYear|date_modify("+1 year")|date("Y")+i }}" >
+                        {{ actualYear|date_modify("+1 year")|date("Y")+i }}
+                    </option>
+                    {% else %}
+                    <option value="{{ actualYear|date_modify("+1 year")|date("Y")+i }}" >
+                        {{ actualYear|date_modify("+1 year")|date("Y")+i }}
+                    </option>
+                    {% endif %} 
+                    {% endfor %}
+                </select>
+            </div>
+            <div>
+                <direct-label class="w-33">Zeugnisart</direct-label>
+                <select name="is_halfyear" class="input-egrade input-is-halfyear" required>
+                    {% if selected_schoolclass.getIsHalfYear == 0 %}
+                    <option selected value="0">Halbjahreszeugnis</option>
+                    <option value="1">Ganzjahreszeugnis</option>
+                    {% else %}
+                    <option value="0">Halbjahreszeugnis</option>
+                    <option selected value="1">Ganzjahreszeugnis</option>
+                    {% endif %} 
+                </select>
+            </div>
+        <input type="hidden" name="pk_class" value="{{ selected_schoolclass.getSchoolClassId() }}">
+        <button type="button" name="action" class="btn-egrade" id="btnUpdateSchoolClass" value="">Klasse aktualisieren</button>
+        </form>
+    </div>
+    <div class="box box-green icon icon-point-pen">
+        <h2>Zeugnisse schreiben</h2>
+        <p>Beginnen Sie jetzt mit dem Schreiben von Zeugnissen für diese Klasse.</p>
+        <a href="{{urlCreateReports}}{{selected_schoolclass.getSchoolClassId}}" class="btn-egrade btn-green">Zeugnisse verfassen</a>
+    </div>
+    <div class="box box-yellow icon icon-agree">
+        <h2>Klasse zur Revision vorlegen</h2>
+        <p>Sie haben alle Zeugnisse für das aktuelle Halbjahr geschrieben? Legen Sie diese Klasse zur Revision bei Ihrem Schulleiter vor.</p>
+            <div class="grid-table grid-table-yellow table-col-2">
+                <span>
+                    <strong>Status</strong>
+                </span>
+                <span>
+                    <strong>Korrektur</strong>
+                </span>
+
+                <span>
+                    <span class="text-danger font-weight-bold smaller-text"><span class="material-icons smaller-text">warning</span> Keine Freigabe erteilt.</span>
+                </span>
+                <span>
+                    <span class="text-danger font-weight-bold smaller-text"><span class="material-icons">warning</span> Korrektur nicht durchgeführt.</span>
+                </span>
+            </div> 
+        <form id="frmUpgradeClass" action="index.php?function=Schoolclass_Details&school_class_id={{ selected_schoolclass.getSchoolClassId() }}&action=revisionSchoolClass" method="POST">
+            <button type="button" class="btn-egrade btn-orange mt-4">Klasse vorlegen</button>
+        </form>
+    </div> 
+    <div class="box box-blue icon icon-duplicate">
+        <h2>Klasse upgraden</h2>
+        <p>Alles ist erledigt? Dann stufen Sie diese Klasse zum nächsten „Level“ hoch, oder erstellen Sie eine Kopie.</p>
+        <form id="frmUpgradeClass" action="index.php?function=Schoolclass_Details&school_class_id={{ selected_schoolclass.getSchoolClassId() }}&action=upgradeSchoolClass" method="POST">
+            <button type="button" class="btn-egrade btn-blue mt-1">Jetzt upgraden</button>
+            <button type="button" class="btn-egrade btn-blue mt-1">Klasse duplizieren</button>
+        </form>
+    </div>   
+    <div class="box box-danger icon icon-delete">
+        <h2>Klasse entfernen</h2>
+        <p>Mit einem Klick auf den folgenden Button entfernen Sie diese Schulklasse sowie alle dazugehörigen Schüler. </p>
+        <form id="frmDeleteClass" action="index.php?function=Schoolclass_Details&school_class_id={{ selected_schoolclass.getSchoolClassId() }}&action=deleteSchoolClass" method="POST">
+            <button type="button" class="btn-egrade btn-red btn-delete-class mt-1">Diese Klasse entfernen</button>
+        </form>
+    </div>    
+    <div class="box icon icon-add-student">
+        <form id="frmAddStudent" action="index.php?function=Schoolclass_Details&school_class_id={{ selected_schoolclass.getSchoolClassId() }}&action=addStudent" method="post">
+            <h2>Schüler hinzufügen</h2>
+            <p>Fügen Sie dieser Klasse neue Schüler hinzu.</p>
+                <div>
+                    <direct-label class="w-33">Vorname</direct-label>
+                    <input type="text" name="student_firstname" class="input-egrade input-student-firstname" required placeholder="Vornamen hier eingeben ..."/>
+                </div>
+                <div>
+                    <direct-label class="w-33">Nachname</direct-label>
+                    <input type="text" name="student_lastname" class="input-egrade input-student-lastname" required placeholder="Nachnamen hier eingeben ..."/>
+                </div>
+                <div>
+                    <direct-label class="w-33">Geburtstag</direct-label>
+                    <input type="date" name="student_date_of_birth" class="input-egrade input-student-date-of-birth" required placeholder="* Geburtstag" onfocus="(this.type='date')"/>
+                </div>
+                <button type="button" name="action" class="btn-egrade" id="btnAddStudent" value="">Hinzufügen</button>
+        </form>
+    </div>
+    <div class="box icon icon-delete">
+        <form id="frmDeleteStudent" action="index.php?function=Schoolclass_Details&school_class_id={{ selected_schoolclass.getSchoolClassId() }}&action=deleteStudent" method="post">    
+            <h2>Schüler entfernen</h2>
+            Sie können einen Schüler aus Ihrer Klasse entfernen. Allerdings werden für diesen dann auch alle Zeugnisformulare gelöscht.
+            <div>
+                <direct-label class="w-33">Schüler auswählen</direct-label>
+                <select required name="delete_student" class="input-egrade select-delete-student" >
+                    <option value="" selected disabled>Wählen Sie einen Schüler ...</option>
+                    {% for student in students %}
+                    <option value="{{student.getStudentID}}">{{student.getFirstname}} {{student.getLastname()}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="button" class="btn-egrade btn-red btn-delete-student mt-1" name="action" value="">Ausgewählten Schüler entfernen</button>
+        </form>
+    </div>
+</div>
+
+{% include 'Schoolclass_Details_js.html' %}
+
+</main>
+{% include 'Footer.html' %}

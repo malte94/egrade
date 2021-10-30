@@ -1,0 +1,128 @@
+<link rel="stylesheet" href="{{ global_App_Url }}/template/css/tinymce.css">
+
+<script type="module">
+
+/* _______________________________ Initial Load _______________________________ */
+
+if(wasLoaded["tinymce"] !== true) {
+
+$.getScript('{{ global_App_Url }}/template/js/tinymce/tinymce.min.js')
+    .done(function( script, textStatus ) {
+        setTimeout(() => activateTinyMCE(), 500);
+        wasLoaded["tinymce"] = true;
+    })
+
+} else {
+
+activateTinyMCE();
+
+}
+
+/* _________________________________ TinyMCE __________________________________ */
+
+function activateTinyMCE() { 
+
+    tinymce.suffix = '.min'; // For Async Load, not required when <script> is used
+    tinyMCE.baseURL = "{{ global_App_Url }}/template/js/tinymce";  // For Async Load, not required when <script> is used
+
+    $(".tox").remove();
+    tinymce.remove(); 
+
+    tinymce.init({
+        forced_root_block : "",
+        forced_root_block : false, 
+        force_br_newlines : false,
+        mode : "specific_textareas",
+        editor_selector : "mceEditor",
+        editor_deselector : "mceNoEditor",
+        plugins: 'autoresize table advlist autolink lists link image charmap print preview hr anchor pagebreak fullscreen code lists',
+        directionality : 'de',
+        language: 'de',
+        nowrap : true,
+        menubar: true,
+        toolbar: true,
+        paste_auto_cleanup_on_paste : true,
+        paste_remove_styles: true,
+        paste_remove_styles_if_webkit: true,
+        resize: true,
+        branding: false,
+        content_css: '{{ global_App_Url }}/template/css/tinymce_iframe.css',
+
+        init_instance_callback: function(editor) {
+        editor.on('focusout', function(e) {
+            tinyMCE.triggerSave();
+        });
+
+        editor.addShortcut("ctrl+s", "Custom Ctrl+S", "custom_ctrl_s");
+            editor.addCommand("custom_ctrl_s", function() {
+                tinyMCE.triggerSave();
+                submit("#frmPinboard", "Das Pinboard wurde gespeichert.");
+        });
+
+        }
+
+    });
+
+    
+    tinymce.init({
+        forced_root_block : "",
+        forced_root_block : false, 
+        force_br_newlines : false,
+        selector: 'textarea',
+        plugins: "code, fullscreen, lists", /* Maybe activating 'autoresize' would be an option */
+        menubar: false,
+        paste_auto_cleanup_on_paste : true,
+        paste_remove_styles: true,
+        paste_remove_styles_if_webkit: true,
+        directionality : 'de',
+        language: 'de',
+        resize: false,
+        /*statusbar: false,*/
+        toolbar: 'undo redo ' +
+        'bold italic underline ' +
+        'numlist bullist' +
+        'removeformat fullscreen code ',
+        branding: false,
+        mode : "specific_textareas",
+        editor_selector : "mceSmallEditor",
+        editor_deselector : "mceEditor",
+        content_css: '{{ global_App_Url }}/template/css/tinymce_iframe.css',
+
+        init_instance_callback: function(editor) {
+        editor.on('focusout', function(e) {
+            tinyMCE.triggerSave();
+        });
+
+        editor.addShortcut("ctrl+s", "Custom Ctrl+S", "custom_ctrl_s");
+            editor.addCommand("custom_ctrl_s", function() {
+                tinyMCE.triggerSave();
+                submit("#frmPinboard", "Das Pinboard wurde gespeichert.");
+        });
+
+        }
+
+    });
+
+    /* Clean Up */
+
+    $( "nav a" ).click(function() {
+        $(".tox").remove();
+        tinymce.remove(); 
+    });
+
+}
+
+setTimeout( () => $( "iframe#substitution_ifr" ).attr( "scrolling", "no" ), 1000);
+
+$(".save-pinboard").click(() => {
+    // submit2($('#frmPinboard'));
+    
+    //arguments: form and callback function
+    submit2($('#frmPinboard'), bindForm);
+
+    // bindForm($('#frmPinboard'), submit2($('#frmPinboard')));
+})
+
+wasLoaded["pinboard"] = true;
+
+</script>

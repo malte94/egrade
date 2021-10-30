@@ -1,0 +1,3605 @@
+/* 
+      _____               _      
+     |  __ \             | |     
+  ___| |  \/_ __ __ _  __| | ___ 
+ / _ \ | __| '__/ _` |/ _` |/ _ \
+|  __/ |_\ \ | | (_| | (_| |  __/
+ \___|\____/_|  \__,_|\__,_|\___|
+                                 
+ 
+Code & Design (C) 2020 by Timo Nolze & Malte Hoch
+
+*/
+
+/* ICON SETS *
+
+https://www.iconfinder.com/iconsets/online-marketing-hand-drawn-vol-3
+https://www.iconfinder.com/iconsets/free-98-icons  
+https://www.iconfinder.com/families/hand-drown-icon
+
+*/
+
+/* ################## ROOT ################## */
+
+*:focus, *:hover {
+  outline: none !important;/* Bootcrap */
+}
+
+input, select, textarea, button:active, button:hover, button:focus {
+  outline: none !important; /* Bootcrap */
+}
+
+:root {
+  --breakpoint-xs: 0;
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1250px;
+
+  --color-accent-header: #026295;
+  --color-accent-header-user: #323c50;
+  --color-accent-header-chat: #00e1ff1f;
+  --color-accent-nav: #e0e0e0;
+  --color-accent-main: linear-gradient(90deg, rgb(235, 235, 235) 0%, rgba(232,232,232,1) 100%);
+  --color-accent-footer: #282830;
+  --color-box: #eeeeee;
+  --color-box-shadow-nav: #a7a7a7;
+  --color-font-dark-grey: #292929;
+  --color-font-light-grey: #d1d1d1;
+  --color-font-nearly-white: #ebebeb;
+  --color-main-bg-color: #138fe8;
+  --color-black: #000;
+  --color-dark-grey: #292929;
+  --color-mid-dark-grey: #3f3f3f;
+  --color-mid-light-grey: #888888;
+  --color-light-grey: #e4e4e4;
+  --color-nice-blue-darker: rgb(19, 83, 165);
+  --color-nice-blue: #2196F3;
+  --color-white: #fff;
+
+  --font-first: "Lato";
+  --font-second: "Lora";
+  --font-third: /*"Lobster"*/ "Knewave";
+  --font-fourth: "Contrail One";
+  --font-fifth: "Jockey One";
+  --font-nav: "Viga";
+
+}
+
+html, body {
+  background-color: var(--color-main-bg-color);
+  color: var(--dark-grey);
+  font-family: var(--font-first);
+  font-size: 0.95rem; /* root: 1rem = 16px */
+  overflow: hidden;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  height: 100vh;
+  width: 100vw;
+  transform: translateZ(0); /* To fix Blurry Font */
+  touch-action: none; /* To disable Safari push animation */
+}
+
+body .hasBg {
+  background-image: url(../img/bg-ice.jpg);
+  background-size: cover;
+  filter: blur(15px);
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0; left: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+
+body .hasPinboard {
+  background-image: url(../img/pinboard-school.jpg);
+  background-size: cover;
+  background-repeat: repeat;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0px; left: 0px;
+  z-index: -1;
+  overflow: hidden;
+}
+
+div {
+  position: relative;
+}
+
+h1 {
+  transition: 0.5s;
+  margin: 0;
+}
+
+h1:hover {
+  opacity: 0.7;
+}
+
+h2 {
+  font-family: var(--font-first);
+  font-size: 1.6rem;
+  letter-spacing: -1px;
+  margin: 0px 0px 1rem 0px;
+  color: var(--color-dark-grey);
+  /*filter: blur(0.1px); /* Smooth hack which I worked out :-) */
+  text-align: left;
+  margin: 0 0 10px 0;
+  line-height: 100%;
+}
+
+h3 {
+  font-family: var(--font-first);
+  font-size: 1.2rem;
+  color: var(--color-dark-grey);
+  margin: 0 0 10px 0;
+  line-height: 100%;
+  /*filter: blur(0.1px); /* Smooth hack which I worked out :-) */
+}
+
+p {
+  letter-spacing: 1px;
+}
+
+label {
+    font-family: var(--font-first);
+    font-size: 0.9rem;
+    margin-left: 5px;
+    vertical-align: top;
+    color: var(--color-dark-grey);
+    /*filter: blur(0.1px); /* Smooth hack which I worked out :-) */
+}
+
+hr {
+  border: 0;
+  border-top: 3px solid #e7e7e7;
+  margin: 10px 0px 10px 0px;
+}
+
+    hr.bigger {
+      border: 0;
+      border-top: 8px solid #a1a1a1;
+      margin: 12px;
+      opacity: 0.5;
+      transition: 0.2s ease-in-out;
+    }
+
+    hr.bigger:hover {
+      opacity: 1.0;
+    }
+
+.material-icons {
+  vertical-align: middle;
+}
+
+a:link, a {
+  color: var(--color-nice-blue-darker);
+}
+
+a:hover {
+  opacity: 0.8;
+  text-decoration: none;
+}
+
+a:not([href]) {
+  cursor: pointer;
+}
+
+::-webkit-scrollbar
+{
+    /*background: var(--color-accent-footer);*/
+    /* background: var(--color-font-light-grey); */
+    background: transparent;
+    width: 7px;
+
+}
+
+::-webkit-scrollbar-track
+{
+  /*background: var(--color-accent-footer);*/
+  /* background: var(--color-font-light-grey); */
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb
+{
+    border-radius: 0px;
+    background-color: rgb(22, 125, 199);
+    height: 100px;
+	  transition: all ease 2.5s;
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+  /* background: #555D69; */
+  background: rgb(22, 125, 199,.5);
+}
+
+
+::-webkit-scrollbar-thumb:hover 
+{
+    background-color: #0096FF;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active  {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+
+
+/* ########################################## INPUT, SELECT, BUTTON, FORMS ############################################# */
+
+.grid-login form {
+  text-shadow: 1px 1px var(--color-dark-grey);
+  color: var(--color-white);
+ }
+
+ .grid-login button {
+   font-family: Lato;
+   margin: 0;
+   width: 250px !important;
+ }
+
+ .grid-login form input {
+  display: block;
+  background: rgba(255,255,255,1);
+  background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
+  background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(255,255,255,1)), color-stop(47%, rgba(246,246,246,1)), color-stop(100%, rgba(237,237,237,1)));
+  background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
+  background: -o-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
+  background: -ms-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
+  background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed', GradientType=0 );
+  box-shadow: 0px 0px 1px var(--color-light-grey);
+  border-radius: 5px;
+  outline: none;
+  font-size: 18px;
+  padding: 15px;
+  width: 250px;
+  color: #8f8fa1;
+  border: 0;
+  margin-bottom: 3px;
+ }
+ 
+ .grid-login form input:hover {
+  box-shadow: 0px 0px 5px var(--color-nice-blue);
+ }
+
+ .grid-login form input:focus {
+   box-shadow: 0px 0px 15px var(--color-nice-blue);
+   outline: 0 none !important;
+   border: 0px;
+ }
+
+ .grid-login form button {
+   box-shadow: 0px 0px 5px var(--color-dark-grey);
+   padding: 15px;
+   width: 15vw;
+   min-width: 250px;
+   height: 6vh;
+   min-height: 60px;
+}
+
+.btn-egrade {
+  display: inline-block;
+  position: relative;
+  font-family: var(--font-first);
+  color: var(--color-mid-dark-grey);
+  letter-spacing: 0px;
+  background: #f4f4f4;
+  background: linear-gradient(top,rgba(244,244,244,1) 0%,rgba(242,242,242,1) 100%);
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 10px 40px;
+  border: 1px solid #e0e0e0;
+  /* text-shadow: 0 1px 1px #e8e8e8; */
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px var(--color-light-grey);
+  transition: all 0.1s ease-in-out;
+}
+
+  .btn-egrade:focus {
+
+  }
+
+  a.btn-egrade {
+  color: var(--color-mid-dark-grey);
+  background: #f4f4f4;
+  background: linear-gradient(top,rgba(244,244,244,1) 0%,rgba(242,242,242,1) 100%);
+  }
+
+  .btn-egrade.icon {
+    text-indent: 0;
+    padding-left: 50px !important;
+  }
+
+  .btn-egrade.plain {
+    background: none;
+    border: none;
+    box-shadow: none;
+    font-size: 0.9rem;
+    padding: 0;
+    margin: 0;
+  }
+
+      .btn-egrade.plain.icon {
+        padding-left: 25px !important;
+      }
+
+      .btn-egrade.plain .material-icons {
+        font-size: 1.2rem;
+        left: 10px;
+      }
+
+  .btn-egrade .material-icons {
+    position: absolute;
+    top: 50%;
+    left: 25px;
+    transform: translate(-50%, -50%);
+  }
+
+  .btn-egrade:hover {
+    color: var(--color-mid-dark-grey);
+    opacity: 0.7;
+  }
+
+  .btn-solid {
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  .btn-red, .btn-danger {
+    color: #fff;
+    text-shadow: none;
+    background-color: rgb(167, 0, 0, .7);
+  }
+
+    .btn-red:hover, .btn-danger:hover {
+      color: #fff !important;
+      text-shadow: none;
+      opacity: 1;
+      background-color: rgb(167, 0, 0, .9);
+    }
+
+  .btn-attest {
+    background-image: url(../img/icon-sync.svg);
+    background-position: 10% 50%;
+    background-size: 20px;
+    background-repeat: no-repeat;
+    text-indent: 12px;
+  }
+
+  .btn-absence {
+    background-image: url(../img/icon-pencil.svg);
+    background-color: #ffe07199;
+    background-position: 10% 50%;
+    background-size: 22px;
+    background-repeat: no-repeat;
+    text-indent: 16px;
+  }
+
+  .btn-pencil {
+    background-image: url(../img/icon-pencil.svg) !important;
+    background-position: 10% 50% !important;
+    background-size: 22px !important;
+    background-repeat: no-repeat !important;
+    text-indent: 16px !important;
+  }
+
+  .btn-magnify {
+    background: rgb(244,244,244);
+    background-image: url(../img/icon-magnify.svg);
+    background-position: 10% 50%;
+    background-size: 20px;
+    background-repeat: no-repeat;
+  }
+
+  .btn-save {
+    background: rgb(244,244,244);
+    background-image: url(../img/icon-save.svg);
+    background-position: 10% 50%;
+    background-size: 20px;
+    background-repeat: no-repeat;
+  }
+
+  .btn-blue {
+    color: #fff !important;
+    border: none;
+    background: rgb(61, 167, 224);
+  }
+
+    .btn-blue:hover {
+      color: #fff !important;
+      text-shadow: none;
+      opacity: 1;
+      background-color: rgb(0, 166, 255);
+    }
+
+    .btn-blue:focus {
+      border: 4px #ffffff50 solid;
+    }
+
+  .btn-green {
+    background: rgb(129, 184, 85) !important;
+    color: #fff !important;
+    border: none;
+  }
+
+    .btn-green:hover {
+      background: rgb(101, 181, 37) !important;
+      opacity: 1;
+    }
+
+  .btn-orange {
+    background: rgb(224, 166, 61);
+    color: #fff !important;
+    border: none;
+  }
+
+    .btn-orange:hover {
+      background: rgb(242, 156, 0);
+      opacity: 1;
+    }
+
+    .btn-orange:focus {
+      border: 4px #ffffff50 solid;
+    }
+
+direct-label {
+  position: absolute;
+  height: 100%;
+  right: 0;
+  top: 0;
+  margin: 0;
+  padding: 8px;
+  font-family: var(--font-first);
+  font-size: 0.8rem;
+  box-shadow: 1px 1px 5px rgba(0,0,0,0.05);
+  border-radius: 0px 2px 2px 0px; 
+  letter-spacing: 0px;
+  color: var(--color-mid-dark-grey);
+  opacity: 1;
+  transition: 0.2s all ease-in-out;
+}
+  direct-label:hover {
+    opacity: 0.8;
+  }
+
+.input-egrade, input[type="date"] {
+  background: #fff;
+  display: block;
+  width: 67%;
+  border: none;
+  padding: 8px;
+  margin: 15px 0px 15px 0px;
+  box-shadow: 0px 0px 10px var(--color-light-grey);
+  border-radius: 2px;
+  transition: 0.5s all ease-in-out;
+}
+
+/* input[type="date"]::-webkit-calendar-picker-indicator, input[type="date"]::-webkit-input-placeholder, input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
+  visibility: hidden;
+  -webkit-appearance: none;
+} */
+
+input[type=date]::-webkit-inner-spin-button,
+input[type=date]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+} 
+
+  input .input-small {
+    width: 32px;
+  }
+
+  input::placeholder {
+    -webkit-transform: translateY(0px);
+    transform: translateY(0px);
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+  }
+
+  input:hover, input:focus, input:active:focus, select:hover, select:focus {
+    color: var(--color-accent-header);
+    outline: none;
+    border-bottom: 1px solid var(--color-accent-header);
+  }
+
+  input:hover::placeholder, input:focus::placeholder, input:active:focus::placeholder {
+    color: var(--color-accent-header);
+    position: relative;
+    -webkit-transform: translateY(-5px);
+    transform: translateY(-5px);
+  }
+
+  select::-ms-expand {
+    display: none;
+  }
+
+  select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-indent: 1px;
+    text-overflow: '';
+  }
+
+  select:invalid {
+    color: var(--color-mid-light-grey);
+  }
+
+  textarea {
+    width: 100%;
+    padding: 2px;
+    background-color: transparent !important;
+    resize: none;
+    border: 0 !important;
+  }
+
+  /* Customize the label (the container) */
+  .egrade-checkbox {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  padding-top: 2px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  margin-left: 2px;
+}
+
+/* Hide the browser's default checkbox */
+.egrade-checkbox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.egrade-checkbox  .checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  margin-right: 10px;
+  background-color: whitesmoke;
+  box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
+  border-radius: 4px;
+}
+
+/* On mouse-over, add a grey background color */
+.egrade-checkbox:hover input ~ .checkmark {
+  background-color: rgb(228, 228, 228);
+}
+
+/* When the checkbox is checked, add a blue background */
+.egrade-checkbox input:checked ~ .checkmark {
+  background-color: var(--color-nice-blue);
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.egrade-checkbox .checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.egrade-checkbox input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.egrade-checkbox .checkmark:after {
+  left: 7px;
+  top: 3px;
+  width: 5px;
+  height: 13px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+
+}
+
+/* Customize the label (the container) */
+.egrade-radio {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.egrade-radio input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom radio button */
+.egrade-radio .checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+  border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.egrade-radio:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.egrade-radio input:checked ~ .checkmark {
+  background-color: var(--color-nice-blue);
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.egrade-radio .checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.egrade-radio input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.egrade-radio .checkmark:after {
+  top: 9px;
+  left: 9px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: white;
+}
+
+/* The container must be positioned relative: */
+.egrade-select {
+  position: relative;
+  font-family: Arial;
+}
+
+.egrade-select select {
+  display: none; /*hide original SELECT element: */
+}
+
+.egrade-select .select-selected {
+  background-color: var(--color-nice-blue);
+  border-radius: 5px;
+}
+
+/* Style the arrow inside the select element: */
+.egrade-select .select-selected:after {
+  position: absolute;
+  content: "";
+  top: 14px;
+  right: 10px;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-color: #fff transparent transparent transparent;
+}
+
+/* Point the arrow upwards when the select box is open (active): */
+.egrade-select .select-selected.select-arrow-active:after {
+  border-color: transparent transparent #fff transparent;
+  top: 7px;
+}
+
+/* style the items (options), including the selected item: */
+.egrade-select .select-items div,.select-selected {
+  color: #ffffff;
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+  cursor: pointer;
+}
+
+/* Style items (options): */
+.egrade-select .select-items {
+  position: absolute;
+  background-color: DodgerBlue;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 99;
+}
+
+/* Hide the items when the select box is closed: */
+.egrade-select .select-hide {
+  display: none;
+}
+
+.egrade-select .select-items div:hover, .same-as-selected {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+
+
+/* ################ GRID: LOGIN ################## */
+
+.grid-login {
+  display: grid;
+  height: 90%;
+  width: 100vw;
+  align-items: center; /* Horizontal */
+  justify-items: center; /* Vertikal */
+  animation: zoomIn 2s;
+}
+
+.grid-login h1.logo {
+  font-family: var(--font-third);
+  font-size: 5rem;
+}
+
+/* ################ GRID: MAIN ################## */
+
+/* Good Reference for nested grids like used here: https://gridbyexample.com/examples/example21/ # NESTED GRID */
+/* A simple example of nesting one grid inside another. Any Grid Area can become a grid itself, 
+by setting display:grid and then defining the rows and columns. */
+
+/* 
+
+.class .class matches any elements of class .class that are descendants of another element with the class .class.
+
+.class.class matches any element with both classes.
+
+*/
+
+.grid-main {
+  display: grid;
+  height: 95vh;
+  width: 95vw;
+  overflow: hidden;
+  position: relative; /* For attached absolute containers */
+  overflow: -moz-hidden-unscrollable;
+  grid-template-columns: 155px 1fr 1fr;
+  grid-template-rows: 77px 1fr 0.05fr;
+  grid-template-areas:
+  "header header header"
+  "nav main main"
+  "footer footer footer";
+  animation: fadeIn 1s;
+  transition: 1s all ease-in-out; /* führt eventuell zu Rendering-Fehlern */
+
+    /* Nice snippet for centering stuff */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    box-shadow: 0px 0px 20px rgba(0,0,0,0.75);
+    border: 0;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%); 
+    /* To Fix Blurry Font */
+    transform: translateZ(initial);
+    /*-webkit-font-smoothing: subpixel-antialiased;*/
+    /* --- */
+     background: var(--color-accent-main); 
+}
+
+.grid-main > header {
+  display: grid; /* Grid in Grid */
+  position: relative;
+  grid-area: header; /* Referes to areas in .grid-main */
+  grid-row: 1; /* This is necessary. Otherwise rows may be generated automatically. */
+  grid-template-columns: 1fr 1fr 1fr;
+  color: var(--color-white);
+  /*background: rgb(0,115,176);*/
+  /*background: linear-gradient(180deg, rgba(0,115,176,1) 0%, rgba(2,98,149,1) 100%);*/
+  /*background: linear-gradient(180deg, #0084ca 0%, #006aa3 100%);*/
+  /*background: linear-gradient(180deg, #2196f3 0%, #006aa3 100%);*/
+  background: linear-gradient(180deg, #008fff 0%, #00659b 100%);
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
+  z-index: 2;
+}
+
+  header > div:nth-of-type(1) {
+    display: flex; /* To align each item to the other */
+    grid-column: 1;
+    grid-row: 1; /* This is necessary. Otherwise rows may be generated automatically. */
+    align-items: center; /* Vertical */
+    justify-content: left; /* Horizontal */
+  }
+
+  header > div:nth-of-type(2) {
+    display: flex; /* To align each item to the other */
+    grid-column: 2;
+    grid-row: 1; /* This is necessary. Otherwise rows may be generated automatically. */
+    justify-self: center; /* Horizontal behaviour */
+    /* Align-self is not necessary due to a height: 100% child */
+  }
+
+  header > div:nth-of-type(3) { 
+    display: flex; /* To align each item to the other */
+    grid-column: 3;
+    grid-row: 1; /* This is necessary. Otherwise rows may be generated automatically. */
+    justify-self: right; /* Horizontal behaviour */
+    /* Align-self is not necessary due to a height: 100% child */
+  }
+
+  header h1 { 
+    animation: bounceIn 1s;
+    color: #efefef;
+    /* text-shadow: 1px 1px 5px var(--color-dark-grey); */
+    text-shadow: 2px 2px 1px #00000060;
+    font-family: var(--font-third);
+    padding: 10px;
+    margin: 0px 25px 0px 20px;
+    font-size: 2.8rem;
+    /*filter:blur(0.1px);*/
+  }
+
+    header h1:hover {
+      animation: pulse 0.5s infinite;
+      opacity: 1;
+    }
+
+  header .header-burger-menu {
+    height: 32px;
+    width: 32px;
+    margin: 10px;
+    margin-left: 25px;
+    background: url(../img/nav-burger-menu.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    transition: 0.25s all ease-in-out;
+    align-self: center; /* Overwrites parent definition of align-items */
+    cursor: pointer;
+  }
+
+  header .header-burger-menu:hover {
+    opacity: .6;
+  }
+
+  header .header-online-status {
+    color: rgb(182, 36, 36);
+    text-shadow: 1px 1px 3px #00000070;
+    margin-top: 5px;
+  }
+
+    header .header-online-status.online {
+      color: rgb(89,182,36);
+    }
+
+  header .header-chat {
+    display: block;
+    grid-column: 2;
+    height: 100%; width: 80px;
+    background-color: var(--color-accent-header-chat);
+    background-image: url(../img/icon-header-chat.svg);
+    background-size: 50%;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    padding: 10px;
+    transition: 1s;
+  }
+
+  header .header-chat:hover {
+    background-color: var(--color-nice-blue);
+  }
+
+    header .header-chat .message-notification {
+      display: block;
+      position: sticky;
+      position: -webkit-sticky;
+      padding-left: 1px;
+      padding-top: 3px;
+      margin-left: 44px;
+      font-size: .6rem;
+      color: #fff;
+      text-shadow: 1px 1px 1px #000;
+      text-align: center;
+      width: 18px; height: 18px;
+      box-shadow: 1px 1px 5px rgb(0,0,0,.5);
+      border-radius: 60px;
+      opacity: .9;
+      background: #c51515;
+    }
+
+  header .header-login {
+    display: block;
+    grid-column: 3;
+    height: 100%; width: 80px;
+    background-color: var(--color-accent-header-user);
+    background-image: url(../img/icon-account.svg);
+    background-size: 50%;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    padding: 10px;
+    transition: 1s;
+    border-radius: 1px 0px 1px 0px; /* Detailing :-) */
+  }
+
+  header .header-login:hover {
+    background-color: var(--color-nice-blue);
+  }
+
+  header .sub-menu, header .online-status {
+    font-family: var(--font-first);
+    display: block;
+    position: absolute;
+    /* top: 97%;
+    right: 0; -- This will be done in JS */ 
+    padding: 15px;
+    color: #fff;
+    font-size: 1rem;
+    text-align: left;
+    background-color: var(--color-accent-header-user);
+    box-shadow: 1px 1px 8px #3f3f3f;
+    z-index: 2;
+  }
+
+  header .sub-menu {
+    display: none;
+    position: absolute;
+    min-width: 250px;
+    top: 77px;
+    right: 0px;
+    letter-spacing: 1px;
+  }
+
+    header .sub-menu h2 {
+      color: #fff;
+      font-size: 1.1rem;
+      text-align: left;
+    }
+
+    header .sub-menu a.item {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      color: var(--color-font-light-grey);
+      transition: .5s all ease-in-out;
+    }
+
+    header .sub-menu a.item:hover {
+      background: var(--color-nice-blue);
+      text-decoration: none;
+    }
+
+.grid-main > nav {
+  display: flex; /* Flex is best practice for sub-layouting */
+  grid-area: nav; /* Referes to "grid-template-areas" in .grid-main */
+  font-family: var(--font-nav);
+  background-color: var(--color-accent-nav);
+  background-size: cover;
+  background-position: 50% 50%;
+  border: 0;
+  transition: 0.25s all ease-in-out;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+  /* place-content: center; Items are at start of div and centered */
+  overflow: auto;
+  z-index: 1;
+}
+
+  /* nav .main-menu can alternatively be deleted so that the a-items are directly listed in "nav"
+  This needs the same handling: flex-direction: column & justify-content: space-evenly.
+  However, for further mobile changes this might be a better solution to add classes and css with JS */
+
+  nav > .main-menu {
+    display: flex; /* Flex is best practice for sub-layouting */
+    flex-direction: column;
+    justify-content: space-evenly;
+    /*for ie*/
+    justify-content: space-around;
+    flex-grow: 1; /* To stretch the menu elements */
+  }
+  
+  nav a, nav a:visited, .main-menu a:visited, .main-menu a, nav a:link, nav a:not([href]) {
+    display: block;
+    /*filter: blur(0.1px);*/
+    color: #646464 !important;
+    font-size: 1rem;
+    letter-spacing: -0.2px;
+    transition: .1s ease-in-out;
+    cursor: pointer;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  nav a:hover {
+    color: var(--color-mid-dark-grey);
+    opacity: 0.7;
+  }
+
+  nav .nav-burger-menu:hover {
+    opacity: 0.7;
+    transition: 0.25s all ease-in-out;
+  }
+
+  nav .nav-link {
+    padding-top: 42px;
+    text-align: center;
+  }
+  
+  nav a.menu-overview {
+    background-image: url(../img/icon-nav-main.svg);
+    background-size: 33px;
+    background-position: top center;
+    background-repeat: no-repeat;
+  }
+
+  nav a.menu-create {
+    background-image: url(../img/icon-nav-create.svg);
+    background-size: 36px;
+    background-position: top center;
+    background-repeat: no-repeat;
+  }
+
+  nav a.menu-mycalendar {
+    background-image: url(../img/icon-nav-main-calendar.svg);
+    background-size: 34px;
+    background-position: top center;
+    background-repeat: no-repeat;
+  }
+
+  nav a.menu-rooms {
+    background-image: url(../img/icon-nav-rooms.svg);
+    background-size: 40px;
+    background-position: top center;
+    background-repeat: no-repeat;
+  }
+
+
+  nav a.menu-myclasses {
+    background-image: url(../img/icon-nav-my-classes.svg);
+    background-size: 36px;
+    background-position: top center;
+    background-repeat: no-repeat;
+  }
+
+  nav a.menu-myreports {
+    background-image: url(../img/icon-nav-my-reports.svg);
+    background-size: 36px;
+    background-position: top center;
+    background-repeat: no-repeat;
+  }
+
+
+.grid-main > main {
+  grid-area: main; /* Refers to the "grid-template-areas" in ".grid-main" */
+  position: relative;
+  overflow-y: auto; /* Scrollbars for this section horizontally */
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23000000' fill-opacity='0.01' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+  .grid-main > main h1 {
+    font-size: 2rem;
+    margin-bottom: 0;
+    animation: fadeIn 3s;
+  }
+
+.grid-main > footer {
+  display: grid;
+  grid-area: footer;
+  color: #777777;
+  font-family: var(--font-nav);
+  font-size: .8rem;
+  align-items: center;
+  justify-items: center;
+  text-align: center;
+  background: var(--color-accent-nav);
+  z-index: 1;
+  padding: 8px;
+  box-shadow: 1px 1px 5px rgb(0,0,0,.1);
+  letter-spacing: 0px;
+}
+
+.grid-main > footer .item {
+  grid-row: 1; /* This is necessary. Otherwise repositioning the grid-columns lead to new rows automatically. */
+}
+
+.grid-main > footer .item:nth-child(1) {
+  grid-column: 1;
+}
+
+.grid-main > footer .item:nth-child(2) {
+  grid-column: 2;
+}
+
+.grid-main > footer .item:nth-child(3) {
+  grid-column: 3;
+}
+
+/* ############################################ BASIC LAYOUTS & CLASSES ####################################### */
+
+/*
+
+flex: 1 1 auto, which is short for:
+
+flex-grow: 1 (grow proportionally)
+flex-shrink: 1 (shrink proportionally)
+flex-basis: auto (initial size based on content size)
+
+.flexitem:nth-child(1) { flex-shrink: 1}
+.flexitem:nth-child(2) { flex-shrink: 1; background: orange}
+.flexitem:nth-child(3) { flex-shrink: 1}
+
+*/
+
+
+/* Column and Row must be own div containers. They work as the "parent definition" for all sub containers.
+So all sub containers will either be a column or a row. */
+
+/*
+
+.flex-container {
+  display: flex;
+  width: 100%;
+}
+
+.flex-child {
+  flex-basis: 50%;
+  min-width: 50%;
+}
+
+*/
+
+.flex-row {
+  display: flex; /* Flex is best practice for sub-layouting */
+  flex-direction: row; /* Items are ordered in a row, one after the other. Can be changed during runtime. */
+  flex-wrap: wrap;
+  flex-grow: 1;
+  justify-content: center;
+  align-items: flex-start; /* This prevents the elements stretching to the longest one, although no content is in them. 
+  Basically a very nice behaviour, but not desired here. To trigger nice behaviour, just delete. */
+  place-content: flex-start center; /* Items are at start of div and centered horizontally. May be important for height and correct margins. 
+  You can see this behaviour online on mobile device in our app, where the margins are too big when not used. */
+  /* justify-content: flex-start space-evenly; */ /* This splits the items equally over the container. May not be necessary. */
+  margin: 10px;
+}
+
+.flex-column {
+  display: flex; /* Flex is best practice for sub-layouting */
+  flex-direction: column; /* Items are ordered in a column, one after the other. Can be changed during runtime. */
+  flex-wrap: wrap;
+  align-items: flex-start; /* This prevents the elements stretching to the longest one, although no content is in them. 
+  Basically a very nice behaviour, but not desired here. To trigger nice behaviour, just delete. */
+  place-content: flex-start left; /* Items are at start of div and left. May be important for height and correct margins. 
+  You can see this behaviour online on mobile device in our app, where the margins are too big when not used. */
+  /* justify-content: flex-start space-evenly; */ /* This splits the items equally over the container. May not be necessary. */
+}
+
+/* ___________ These Layouts are intended to be appended directly to the .box (flexbox) elements __________ */
+
+
+.flex-fit {
+  flex: 1 1 auto;
+}
+
+.flex-25 {
+  flex-basis: 24% !important;
+}
+
+.flex-33 {
+  flex-basis: 31% !important;
+}
+
+.flex-50 { /* Logic of this needs to be revised. Because a .col-50 in a flex-row container as negative impact on its child elements, because these are not affected by col-50.
+          Maybe you could append .col-50 directly to parent div to have the expected resulte of a 'flex-row 50' for all child elements, which are max. 50% then. */
+  flex-basis: 48% !important;
+}
+
+.flex-100 {
+  flex-basis: 98% !important;
+}
+
+.w-33 {
+  width: 33%;
+}
+
+.w-50 {
+  width: 50%;
+}
+
+.border-bottom-1 {
+  border-bottom: 3px solid #d8d8d8;
+}
+
+.font-weight-bold {
+  font-weight: bold;
+}
+
+.fs-20px {
+  font-size: 20px !important;
+}
+
+.smaller-text {
+  font-size: .8rem;
+}
+
+.text-warning-darker {
+  font-size: .8rem;
+  color: #d4a20e!important;
+}
+
+.line-height-2 {
+  line-height: 1.8rem !important;
+}
+
+/* ______________________________________________________________________________________________________ */
+
+/* ################################################ GENERIC CONTAINERS ################################################### */
+
+.grid-main .box {
+  flex-grow: 1; /* This ensures that the box grows INSIDE a flexbox container to 100. Depending on content width of course. */
+  position: relative;
+  line-height: 1.5rem;
+  letter-spacing: 1px;
+  background: var(--color-box);
+  padding: 20px;
+  margin: 10px;
+  border-radius: 2px;
+  box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 0.05);
+  animation: fadeInUp 1s;
+  opacity: 1;
+}
+
+
+  .grid-main .box::-webkit-scrollbar {
+      background: transparent;
+      width: 2px;
+  }
+
+  .box.plain {
+    background: none !important;
+    box-shadow: none;
+    padding: 0;
+    margin: 10px;
+  }
+
+  .box.box-highlighted {
+    background-color: rgba(245, 245, 245, 0.6);
+    box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 0.15);
+  }
+
+  .box.box-blue {
+    background: rgb(227, 238, 245);
+  }
+
+  .box.box-danger {
+    background: rgb(248, 226, 226);
+  }
+
+  .box.box-green {
+    background: rgb(232, 240, 225);
+  }
+
+  .box.box-yellow {
+    background: rgb(245, 240, 227);
+  }
+
+  .box p {
+    line-height: 1.5rem;
+  }
+
+ .box.scroll-box {
+    max-height: 400px;
+    overflow-y: scroll;
+  }
+  
+  .box.notes {
+    flex-basis: 33%;
+    min-height: 25vh;
+  }
+
+  .box.notes textarea {
+      min-height: 20vh;
+    }
+  
+
+  .box textarea {
+    text-align: justify;
+    white-space: normal;
+    padding-right: 10px; /*To add padding to scrollbar */
+  } 
+
+  .box textarea::-webkit-scrollbar  {
+    width: 2px;
+  }
+
+
+.grid-table {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  overflow: visible;
+}
+
+    .grid-table.table-col-2 {
+      grid-template-columns: 1fr 1fr !important;
+    }
+
+    .grid-table.table-col-3 {
+      grid-template-columns: 1fr 1fr 1fr !important;
+    }
+
+    .grid-table.table-col-4 {
+      grid-template-columns: 1fr 1fr 1fr 1fr !important;
+    }
+
+    .grid-table.table-col-5 {
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr !important;
+    }
+
+    .grid-table.report-info {
+      grid-template-columns: 1fr !important;
+    }
+
+    .grid-table ul {
+      list-style: none;
+      margin: 0; padding: 0;
+    }
+
+    .grid-table > span {
+      display: flex;
+      padding: 8px 4px;
+      border-bottom: 3px solid #e7e7e7;
+      align-items: center;
+    }
+
+        .grid-table-yellow > span {
+          /*border-bottom: 3px solid #ebe8c1;*/
+        }
+
+        .grid-table-dark > span {
+          border-bottom: 3px solid #c8c8c8;
+        }    
+
+    .grid-table.student-list {
+      max-height: 500px;
+      overflow-x: auto;
+      padding-right: 15px;
+    }
+
+        .grid-table.student-list::-webkit-scrollbar  {
+          width: 3px;
+        }
+      
+        .grid-table .student-picture {
+          justify-content: center;
+        }
+
+        .grid-table .student-picture img {
+          width: 32px;
+          height: 32px;
+          border-radius: 32px;
+          box-shadow: 0px 0px 5px #00000080;
+        }
+
+.save-bar {
+  display: flex; /* Will be handled with JS */
+  align-items: flex-end;
+  justify-content: flex-end;
+  margin: 0 10px;
+  width: 100%;
+}
+
+/* ############################ VIEW: OVERVIEW ########################### */
+
+.grid-main > main .box.dashboard-card {
+  flex-grow: 1; /* Every time this div is used, it stretches equally to the screen size, 
+  which results in a very accurate splitting of all dashboard-cards in the parent .grid-main > main. 
+  It's basically a better method of width: 100 %; 
+  This means that every item has initially a length of 1 piece actually.
+  display: block can be used optionally, may need further investigation for best practice.
+  */
+}
+
+  .grid-main > main .box.dashboard-card.notes {
+    flex-basis: 33% !important; /* Since all boxes do grow as previously described in .dashboard-card, with flex-basis we stretch .notes a bit longer. */
+  }
+
+/* ############################ VIEW: CREATE REPORTS ########################### */
+
+.grid-reports {
+  display: grid; /* Grid in Grid */
+  height: 100%; /* In contrast to Flexbox, Grid can be used to assign height: 100% to a container.
+  It stretches to the parent container even if the viewport changes. Flexbox does not work with height actually. 
+  Unless you use flex-direction: column; to the parent container. */
+  grid-template-rows: 1fr; /* optional */
+  grid-template-columns: minmax(200px, 250px) minmax(0, 1fr) 0.5fr; /* I use minmax here, to basically don't exceed the width of the browser's window.
+  Otherwise, if I'd use only 1fr for example, the <div> container for Medium Editor would increase its width dynamically,
+  so that vertical scrollbars would be appended finally. Only required if <div> can be filled with dynamic user content. */
+  grid-area: main; /* referes to Main in .grid-main */
+}
+
+  .col-students {
+    grid-row: 1; /* .col-students must only be in the first row of .grid-reports  to stretch */
+    grid-column: 1; /* Only the first column of .grid-reports */
+    padding: 20px;
+    position: relative;
+    background: rgba(204,204,204,.7);
+    box-shadow: 1px 1px 10px 0px rgba(0,0,0, 0.25);
+    font-size: .8rem;
+    line-height: 200%;
+    letter-spacing: 1px;
+    animation: slideInLeft 0.5s;
+  }
+  
+  .col-students .content-wrapper {
+    position: sticky;
+    top: 30px;
+
+  }
+
+  .col-students .table {
+    grid-template-columns: 5fr 1fr;
+  }
+
+  .col-students .table > span {
+    border-bottom: 0px solid #575757;
+  }
+
+  .col-students label {
+    font-size: 0.85rem;
+    vertical-align: middle;
+    margin-top: -4px;
+    margin-left: 6px;
+  }
+
+  .col-students h2 {
+    color: var(--color-mid-dark-grey);
+    letter-spacing: 1px;
+    font-size: 1.05rem;
+    line-height: 175%;
+    border-bottom: 1px solid #c5c5c5;
+  }
+
+  table.students-table {
+    width: 100%;
+    max-height: 170px;
+    margin: 0px 0px 20px 0px;
+    display: block;
+    overflow: auto;
+  }
+
+      .students-table-header {
+        display: flex;
+        font-weight: bold;
+        flex-direction: row;
+        justify-content: space-between;
+        margin: 0px 15px 10px 0px;
+      }
+
+      table.students-table::-webkit-scrollbar {
+        background: transparent;
+        width: 2px;
+      }
+
+      table.students-table td {
+        width: 100%;
+      }
+
+      table.students-table td:nth-child(2) {
+        font-family: 'Material Icons';
+        font-weight: normal;
+        font-style: normal;
+        font-size: 24px;  /* Preferred icon size */
+        display: inline-block;
+        line-height: 1;
+        text-transform: none;
+        letter-spacing: normal;
+        word-wrap: normal;
+        white-space: nowrap;
+        direction: ltr;
+        text-indent: 5px;
+        padding-right: 20px;
+        font-feature-settings: 'liga';
+      }
+
+  .col-reports {
+    grid-column: 2; /* All childs of .col-reports and itself are in the second column of .grid-reports
+    Note: grid-rows are automatically assigned, because they are not adressed any further */
+    display: flex; /* .col-reports becomes now a Flexbox to align its child items (box). */
+    flex-wrap: wrap; /* All child elements automatically break */
+    flex-direction: row; /* All child elements flow in a row */
+    align-self: flex-start; /* To align items next to each other and at start of Flex */
+    padding: 10px;
+  }
+
+    .col-reports h2 { /* For all further boxes */
+      font-size: 1.4rem;
+      padding-right: 25px;
+    }
+
+    .col-reports h2.larger {
+      font-size: 1.6rem;
+    }
+
+    .col-reports .button {
+      padding: 5px 30px !important;
+    }
+
+    .col-reports .box { /* Further definitions of the element in .grid-main */
+      flex-basis: 45%; /* So the flex-basis in this case relates to the .col-reports
+      and not to the whole .grid-reports which makes sense and is desired behaviour. 
+      45% means that 45% of .col-reports are used, which is in the second column. */
+
+      /*Note: This needs to be assigned as 100% in the mobile section, because elements
+      must be placed under each other for mobile devices. */
+      flex-grow: 1; /* Stretches equally. Could also be used in mobile mode instead. */
+      max-height: 300px;
+      overflow: auto;
+      text-align: justify;
+    }
+
+      .col-reports .box .share {
+        background-image: url(../img/icon-share.svg);
+        position: absolute;
+        top: 16px; right: 16px;
+        width: 20px; height: 20px;
+        background-size: 20px;
+        background-repeat: no-repeat;
+        background-position: center center;
+        transition: 0.2s all ease-in-out;
+        z-index: 2;
+        cursor: pointer;
+      }
+
+      .col-reports .box .share:hover {
+        opacity: 0.5;
+      }
+
+      .col-reports .box.table-competences {
+        background: transparent;
+        box-shadow: none;
+        margin: 0px;
+        padding: 0;
+        max-height: 100%;
+        height: 100%;
+      }
+
+
+  .col-reports .box input {
+    display: inline-block;
+    margin: 10px;
+    height: 10px;
+    width: 64px;
+  }
+
+  .col-reports textarea {
+
+  }
+
+    /* Chrome, Safari, Edge, Opera */
+    .col-reports .box input::-webkit-outer-spin-button,
+    .col-reports .box input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Firefox */
+  .col-reports .box input[type=number] {
+    -moz-appearance: textfield;
+    min-height: 16px;
+    box-sizing: content-box;
+    width: 32px;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .col-reports .text-incomplete {
+    color: #e7a985;
+  }
+
+  .col-reports .text-complete {
+    color: #b4e785;
+  }
+
+    /* .col-reports .box.RLP_C1_1_V2 {
+      background-image: url(../img/template-rheinland-pfalz.svg);
+      background-position: 98% 10%;
+      background-repeat: no-repeat;
+      background-size: 32px;
+      shape-rendering: geometricPrecision;
+    } */
+  
+  .col-print-preview {
+    grid-row: 1; /* .col-students must only be in the first row of .grid-reports  to stretch */
+    grid-column: 3;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    flex-direction: column;
+    position: relative;
+    padding: 20px;
+    box-shadow: 1px 1px 10px 0px rgba(0,0,0, 0.1);
+    font-size: .8rem;
+  }
+
+    .col-print-preview .din-a4 {
+      display: block;
+      position: -webkit-sticky; /* Safari */
+      position: sticky;
+      top: 30px;
+      overflow: auto;
+      width: calc(21cm / 1.7);
+      height: calc(29.6cm / 1.7);
+      margin: 0; padding: 0;
+      box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
+      background-color: #fff;
+      animation: bounceInDown 1s;
+      transition: linear 0.1s all;
+      overflow: hidden;
+    }
+
+      .col-print-preview .din-a4:hover {
+        opacity: 0.7;
+        cursor: pointer;
+      }
+
+    .col-print-preview #din-a4 {
+      width: calc(21cm / 1.7);
+      height: calc(29.6cm / 1.7);
+    }
+
+    .col-print-preview .pdf-pages {
+      position: -webkit-sticky; /* Safari */
+      position: sticky;
+      display: flex;
+      align-items: center;
+      top: calc(29.6cm / 1.7 + 40px);
+    }
+
+      .col-print-preview #pdf-next:hover, .col-print-preview #pdf-prev:hover {
+        cursor: pointer;
+        animation: pulse 0.5s infinite;
+      }
+
+      .col-print-preview .pdf-pages .pdf-page-element {
+        /*cursor: pointer;
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 4px;
+        margin: 0px 5px 0px 5px;
+        background-color: whitesmoke;
+        box-shadow: 1px 1px 3px #00000050;*/
+        color: var(--color-mid-light-grey);
+        font-family: var(--font-nav);
+        cursor: pointer;
+        display: inline-block;
+        padding: 5px 10px;
+        font-weight: 900;
+        border-bottom: 3px solid var(--color-nice-blue);
+        margin: 0px 5px 0px 5px;
+        transition: 0.2s ease-in-out all;
+        text-shadow: none;
+      }
+
+      .col-print-preview .pdf-pages .pdf-page-element .active {
+        color: #fff;
+        background: rgb(0,115,176);
+        background: linear-gradient(180deg, rgba(0,115,176,1) 0%, rgba(2,98,149,1) 100%);
+      }
+
+      .col-print-preview .pdf-pages .pdf-page-element:hover {
+        color: var(--color-font-dark-grey);
+        border-bottom: 3px solid #00a6ff;
+      }
+
+    .load-preview {
+      position: absolute;
+      top: calc(50% - 75px);
+      left: calc(50% - 75px);
+      height: 150px; width: 150px;
+      background-image: url(../img/loading.svg);
+      background-size: 150px;
+      background-position: center center;
+      background-repeat: no-repeat;
+      animation: 1s pulse infinite;
+    }
+
+    #print-preview-object {
+      animation: fadeIn 2s;
+      overflow: hidden !important; 
+      width: 100%; 
+      height: calc(100% + 1px);
+    }
+
+      .col-print-preview .din-a4 .report {
+        transform: scale(calc(1 / 1.7));
+        transform-origin: 0% 0% 0px;
+      }
+
+      .col-print-preview .din-a4.preview-size {
+        zoom: 1 !important;
+      }
+
+      .col-print-preview .din-a4::-webkit-scrollbar {
+        background: transparent;
+        width: 7px;
+      }
+
+      .col-print-preview .din-a4::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      .col-print-preview .din-a4::-webkit-scrollbar-thumb {
+        border-radius: 0px;
+        background-color: rgb(22, 125, 199);
+        height: 100px;
+        transition: all ease 2.5s;
+      }
+
+      /* CHROME PDF VIEWER */
+
+      span#title {display: none !important;}
+
+  /* Table for Competence Rating System */
+
+
+  .competences {
+    margin: 0;
+    padding: 0;
+  }
+
+  .competences h2 {
+    font-family: var(--font-fourth);
+    font-size: 1.65rem;
+    text-shadow: none;
+    margin: 0; padding: 0;
+  }
+
+  .competences h3 {
+    font-family: var(--font-fifth) !important;
+    letter-spacing: 0.5px !important;
+    font-weight: lighter !important;
+    font-style: normal !important;
+    margin: 20px 0 0 10px;
+    text-shadow: none !important;
+  }
+
+  .competences td h3 {
+    margin: 10px 0px 0px 0px !important
+  }
+
+  table.table-competences {
+    width: 100%;
+    font-family: var(--font-fifth);
+    font-weight: lighter;
+    font-size: 1rem;
+    color: var(--color-font-dark-grey);
+    letter-spacing: 0px;
+    border-collapse:separate;
+    border-spacing: 10px 10px;
+    background: transparent;
+  }
+
+     
+      table.table-competences thead {
+        font-family: var(--font-fourth);
+        font-size: 0.9rem;
+        letter-spacing: 0px;
+        text-align: left;
+      }
+
+          table.table-competences thead td {
+            border-radius: 2px;
+            padding: 10px;
+            border-top: none;
+          }
+      
+          table.table-competences thead td {
+            color: #fff;
+            text-shadow: 1px 1px 2px #000;
+          }
+
+          /* https://coolors.co/e07a5f-fc9f5b-011627-81b29a-2ca58d 
+          https://coolors.co/e07a5f-fc9f5b-586ba4-81b29a-2ca58d
+          */
+
+          table.table-competences thead td:nth-child(1) {
+            vertical-align: bottom;
+            padding: 0;
+          }
+
+          table.table-competences thead td:nth-child(2) {
+            background: #E07A5F;
+          }
+
+          table.table-competences thead td:nth-child(3) {
+            background: #FC9F5B;
+          }
+
+          table.table-competences thead td:nth-child(4) {
+            background: #81b29a;
+          }
+
+          table.table-competences thead td:nth-child(5) {
+            background: #2ca58d ;
+          }
+
+          table.table-competences thead td:nth-child(6) {
+            background: rgb(204, 170, 59);
+          }
+
+
+      table.table-competences tbody {
+          text-align: left;
+          letter-spacing: 0.5px;
+      }
+
+          table.table-competences tbody tr {
+            background: rgba(250, 250, 250, 0.9);
+            height: 70px;
+            vertical-align: middle;
+          }
+
+          table.table-competences tbody td {
+            border-radius: 2px;
+            box-shadow: 0px 0px 5px #00000010;
+            vertical-align: middle;
+            padding: 15px;
+          }
+
+          table.table-competences tbody td:nth-child(1) {
+            width: 52%;
+            overflow: hidden;
+          }
+
+          table.table-competences tbody td:nth-child(2) {
+            width: 12%;
+          }
+
+          table.table-competences tbody td:nth-child(3) {
+            width: 12%;
+          }
+
+          table.table-competences tbody td:nth-child(4) {
+            width: 12%;
+          }
+
+          table.table-competences tbody td:nth-child(5) {
+            width: 12%;
+          }
+
+      table.table-competences .final-grade {
+        cursor: pointer;
+        color: #000;
+        text-shadow: none;
+        font-size: 1.1rem;
+        font-family: "Contrail One";
+        text-align: right;
+        font-weight: 800;
+      }
+
+          table.table-competences .final-grade:hover {
+
+          }
+
+      table.table-competences td {
+        border-top: 0px solid #888888;
+        border-right: 0px solid #888888;
+      }
+
+      table.table-competences tr td:last-child {
+        border-right: none;
+      }
+      
+      /* Styling for Radio Butto */
+      
+      table.table-competences .container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        cursor: pointer;
+        font-size: 22px;
+      }
+
+      table.table-competences .container input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+      }
+
+      table.table-competences .checkmark {
+        position: absolute;
+        height: 25px;
+        width: 25px;
+        background-color: #eee;
+        border-radius: 50%;
+        margin-top: 5px;
+        transition: 0.2s all ease-in-out;
+      }
+
+      table.table-competences .container:hover input ~ .checkmark {
+        background-color: #ccc;
+      }
+
+      table.table-competences .container input:checked ~ .checkmark {
+        background-color: var(--color-nice-blue);
+      }
+
+      table.table-competences .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+      }
+
+      table.table-competences .container input:checked ~ .checkmark:after {
+        display: block;
+      }
+
+      table.table-competences .container .checkmark:after {
+        width: 8px;
+        height: 8px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        background: white;
+      }
+
+    /* Table: Grades */
+
+    .grades-container {
+      margin: 12px; padding: 0;
+    }
+
+    .grades-container h2 {
+      font-family: var(--font-fourth);
+      font-size: 1.5rem;
+      letter-spacing: 0px;
+      line-height: 150%;
+      border-bottom: 4px solid #a1a1a180;
+    }
+
+    table.table-grades {
+      width: 100%;
+      font-weight: lighter;
+      font-size: 1rem;
+      color: var(--color-font-dark-grey);
+      letter-spacing: 0px;
+      border-collapse:separate;
+      background: transparent;
+      table-layout: fixed;
+      margin-bottom: 20px;
+    }
+
+      table.table-grades tbody {
+          text-align: left;
+          letter-spacing: 0.5px;
+      }
+
+          table.table-grades tbody tr {
+            vertical-align: middle;
+          }
+
+          table.table-grades tbody tr td {
+            background: transparent;
+            vertical-align: middle;
+            width: 25%;
+          }
+
+          table.table-grades tbody td {
+            font-family: var(--font-fifth);
+            font-size: 1.3rem;
+            letter-spacing: 0.5px;
+            vertical-align: middle;
+            padding: 5px 0px 15px 0px;
+          }
+
+
+      table.table-grades .final-grade {
+        cursor: pointer;
+        color: rgb(82, 82, 82);
+        text-shadow: none;
+        font-size: 1.1rem;
+        font-family: var(--font-fourth);
+        font-weight: 800;
+        vertical-align: top;
+      }
+
+        table.table-grades .final-grade:hover {
+          animation: pulse 1s infinite;
+        }
+
+
+      table.table-grades td {
+        border-top: 0px solid #888888;
+        border-right: 0px solid #888888;
+      }
+
+      table.table-grades tr td:last-child {
+        border-right: none;
+      }
+
+      
+/* ############################ VIEW: SHARED REPORTS ########################### */
+
+.grid-shared-reports {
+  display: grid; /* Grid in Grid */
+  height: 100%; /* In contrast to Flexbox, Grid can be used to assign height: 100% to a container.
+  It stretches to the parent container even if the viewport changes. Flexbox does not work with height actually. 
+  Unless you use flex-direction: column; to the parent container. */
+  grid-template-rows: 1fr; /* optional */
+  grid-template-columns: minmax(200px, 250px) minmax(300px, 100%);
+  grid-area: main; /* referes to Main in .grid-main */
+}
+
+  .col-shared-sidebar { 
+    grid-row: 1; /* .col-students must only be in the first row of .grid-reports  to stretch */
+    grid-column: 1; /* Only the first column of .grid-reports */
+    padding: 20px;
+    position: relative;
+    background: rgba(204,204,204,.7);
+    box-shadow: 1px 1px 10px 0px rgba(0,0,0, 0.25);
+    font-size: .8rem;
+    line-height: 200%;
+    animation: slideInLeft 1s;
+  }
+
+    .col-shared-sidebar h2 {
+      font-family: "Lora";
+      font-size: 1.1rem;
+      line-height: 200%;
+      border-bottom: 1px solid #c5c5c5;
+    }
+
+    .col-shared-sidebar button {
+        width: 100%;
+        margin-top: 10px;
+        font-size: 1rem;
+        border: 1px solid #c5c5c5;
+        box-shadow: 0px 0px 10px #c5c5c5;
+    }
+
+  .col-shared-content {
+    grid-column: 2; /* All childs of .col-reports and itself are in the second column of .grid-reports
+    Note: grid-rows are automatically assigned, because they are not adressed any further */
+    display: flex; /* .col-reports becomes now a Flexbox to align its child items (box). */
+    flex-wrap: wrap; /* All child elements automatically break */
+    flex-direction: row; /* All child elements flow in a row */
+    align-self: flex-start; /* To align items next to each other and at start of Flex */
+    padding: 10px;
+  }
+
+    .col-shared-content .box {
+      background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23292929' fill-opacity='0.01' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E");
+    }
+
+
+/* ############################ VIEW: MY CLASSES ########################### */
+
+.grid-my-classes {
+  display: grid;
+  grid-area: main;
+  grid-template-columns: repeat(auto-fill, minmax(500px, 1fr)); /* Directly mobile friendly :) */
+  min-height: 100%; /* To stretch in whole .grid-main main-section */
+  /* If you use "height" instead, only viewport height will be considered */
+  padding: 10px;
+  /* align-items: flex-start; /* Don't expand stretch container in its height */
+  grid-auto-flow: dense; /* Not necessary probably */
+}
+
+.grid-my-classes .box {
+  align-self: flex-start; /* Don't stretch containers to end of grid-my-classes. Size them as needed (depending on content) */
+}
+
+/* Icons: 
+
+https://www.iconfinder.com/iconsets/online-marketing-hand-drawn-vol-3
+--> https://www.iconfinder.com/iconsets/ios-11-glyphs <--
+https://www.iconfinder.com/iconsets/mix-and-miscellaneous 
+
+*/
+
+.box.icon {
+  background-position: 98% 10px;
+  background-size: 32px;
+  background-repeat: no-repeat;
+}
+
+.box.icon.icon-add-student {
+  background-image: url(../img/icon-add-student.svg);
+}
+
+.box.icon.icon-agree {
+  background-image: url(../img/icon-agree.svg);
+}
+
+.box.icon.icon-delete {
+  background-image: url(../img/icon-delete.svg);
+}
+
+.box.icon.icon-duplicate {
+  background-image: url(../img/icon-duplicate.svg);
+}
+
+.box.icon.icon-edit {
+  background-image: url(../img/icon-edit.svg);
+}
+
+.box.icon.icon-manage {
+  background-image: url(../img/icon-manage.svg);
+}
+
+.box.icon.icon-point-pen {
+  background-image: url(../img/icon-point-pen.svg);
+  background-position: 97% 6%;
+}
+
+.box.icon.icon-remove {
+  background-image: url(../img/icon-remove.svg);
+}
+
+.box.icon.icon-my-classes-add {
+  background-image: url(../img/icon-my-classes-add.svg);
+}
+
+.box.icon.icon-my-classes-assign {
+  background-image: url(../img/icon-my-classes-assign.svg);
+}
+
+.box.icon.icon-my-classes-remove {
+  background-image: url(../img/icon-my-classes-remove.svg);
+}
+
+.box.icon.icon-my-classes-students {
+  background-image: url(../img/icon-my-classes-students.svg);
+}
+
+.box.icon.icon-notes {
+  background-image: url(../img/icon-notes.svg);
+}
+
+.box.icon.icon-student {
+  background-image: url(../img/icon-student.svg);
+}
+
+/* ############################ VIEW: SCHOOL CLASS DETAILS ########################### */
+
+.grid-school-class-details {
+  /* Attempt to create "Masonry Layout" with old CSS Columns Method */
+  display: block;
+  column-count: 3;
+  width: fit-content;
+  margin: 0px 30px 10px 15px;
+}
+
+.grid-school-class-details .box {
+  display: inline-block; /* dp: block might be used here, see "Chrome Bug Column-Count" */
+  width: 100%;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+/* For Grid:
+.grid-school-class-details > div:nth-child(1) {
+  grid-row-end: span 2; /* To basically fill the empty space of the row 
+}
+
+.grid-school-class-details > div:nth-child(2) {
+  grid-row-end: span 3; 
+} */
+
+
+/* ########################### VIEW: SINGLE STUDENT DETAILS ######################## */
+
+.grid-single-student {
+  display: grid; /* Grid in Grid */
+  height: 100%; /* In contrast to Flexbox, Grid can be used to assign height: 100% to a container.
+  It stretches to the parent container even if the viewport changes. Flexbox does not work with height actually. 
+  Unless you use flex-direction: column; to the parent container. */
+  grid-template-rows: 1fr; /* optional */
+  grid-template-columns: minmax(220px, 1fr) 5fr;
+  grid-area: main; /* referes to Main in .grid-main */
+
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23000000' fill-opacity='0.01' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+  .grid-single-student .box {
+    background: #ebebeb;
+    margin: 10px 10px 10px 0px;
+  }
+
+  .grid-single-student i.fas {
+    font-size: 1.5rem;
+    padding-right: 10px;
+    width: 40px;
+    opacity: .95;
+  }
+
+.col-single-student {
+  display: grid; /* Grid in grid */
+  grid-template-columns: repeat(2, minmax(100px, 1fr));
+  grid-template-rows: 110px repeat(auto-fill, 60px);
+  grid-row: 1; /* .col-students must only be in the first row of .grid-reports  to stretch */
+  grid-column: 1; /* Only the first column of .grid-reports */
+  overflow: hidden;
+  color: #fff;
+  padding: 20px;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  hyphens: auto;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  font-size: 1rem;
+  background-color: #8fb6cb;
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23000000' fill-opacity='0.02' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E");
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0, 0.25), 5px 5px 10px 0px inset rgba(0,0,0, 0.25);
+  animation: fadeIn 1s;
+}
+
+  .col-single-student *:nth-child(1) {
+    align-self: flex-start;
+  }
+
+  .col-single-student *:nth-child(2) {
+    align-self: flex-start;
+    justify-self: flex-end;
+  }
+
+  .col-single-student *:nth-child(even) {
+    text-align: right;
+  }
+
+  .col-single-student * {
+    font-size: 0.9rem;
+    align-self: center;
+    animation: slideInDown 1s;
+  }
+
+  .col-single-student h1 {
+    font-family: Pacifico;
+    /* filter: blur(.1px); */
+    font-size: 2rem;
+  }
+
+  .col-single-student ul {
+    list-style-type: none;
+    margin: 0px 0px 0px 0px;
+    padding: 0 0 0 0;
+    margin-top: 20px;
+  }
+
+  .col-single-student img {
+    flex-grow: 0;
+    width: 100%;
+    height: 100%;
+    max-width: 64px;
+    max-height: 64px;
+    border-radius: 500px;
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.5);
+    background-color: #555;
+  }
+
+  .col-students button {
+    width: 100%;
+    padding: 8px 25px;
+    margin-top: 10px;
+    font-size: 1rem;
+    border: 1px solid #c5c5c5;
+    box-shadow: 0px 0px 10px #c5c5c5;
+  }
+
+.col-single-student-info {
+  /* Note: Used a flex-row-container. Thus no display: flex here. */
+  grid-row: 1;
+  grid-column: 2;
+  padding: 35px;
+  background-color: #ffffff50;
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0, 0.25), 0px 0px 10px 0px inset rgba(0,0,0, 0.1);
+}
+
+  .col-single-student-info .flex-row {
+    margin: 0;
+  }
+
+  .col-single-student-info .box {
+    flex-basis: 45%;
+    background: #fcfcfc;
+  }
+
+  textarea.schulnotenheft {
+    overflow: hidden !important;
+  }
+
+  table.schulnotenheft-table, table.schulnotenheft-table td {
+    padding: 10px;
+  }
+
+  #schulnotenhaft_ifr {overflow:hidden !important;} 
+
+  
+/* ########################### VIEW: ABSENCES ############################ */
+
+.absences-content {
+  background-image: url(../img/bg-absence.jpg) !important;
+  background-size: cover;
+}
+
+  
+/* ########################### VIEW: ADMIN_SCHOOL ADMIN SCHOOL ############################ */
+
+.admin-school-content {
+  background-image: url(../img/bg-admin-school.jpg) !important;
+  background-size: cover;
+}
+
+/* ########################### VIEW: PINBOARD ######################## */
+
+.grid-pinboard {
+  display: grid; /* Grid in Grid */
+  height: 100%; /* In contrast to Flexbox, Grid can be used to assign height: 100% to a container.
+  It stretches to the parent container even if the viewport changes. Flexbox does not work with height actually. 
+  Unless you use flex-direction: column; to the parent container. */
+  grid-template-rows: 1fr; /* optional */
+  grid-template-columns: 1fr;
+  grid-area: main; /* referes to Main in .grid-main */
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23000000' fill-opacity='0.005' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+  .grid-pinboard .box {
+    background: #ebebeb;
+    margin: 10px 10px 10px 0px;
+  }
+
+.col-pinboard-sidebar {
+  display: grid; /* Grid in grid */
+  grid-template-columns: repeat(2, minmax(100px, 1fr));
+  grid-template-rows: 110px repeat(auto-fill, 60px);
+  grid-row: 1; /* .col-students must only be in the first row of .grid-reports  to stretch */
+  grid-column: 1; /* Only the first column of .grid-reports */
+  overflow: hidden;
+  color: #fff;
+  padding: 20px;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  hyphens: auto;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  font-size: 1rem;
+  background-color: #8fcb97;
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23000000' fill-opacity='0.02' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E");
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0, 0.25), 5px 5px 10px 0px inset rgba(0,0,0, 0.25);
+  animation: fadeIn 1s;
+}
+
+.col-pinboard-main {
+  /* Note: Used a flex-row-container. Thus no display: flex here. */
+  grid-row: 1;
+  grid-column: 1;
+  padding: 35px;
+  background-color: #ffffff50;
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0, 0.25), 0px 0px 10px 0px inset rgba(0,0,0, 0.1);
+}
+
+  .col-pinboard-main .box {
+    flex-basis: 45%;
+    background: #fcfcfc;
+  }
+
+
+  /* ############################ VIEW: PINBOARD EXTERNAL VIEW ########################### */
+
+  .grid-external-pinboard {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    align-items: center; /* Horizontal */
+    justify-content: space-evenly; /* Vertikal */
+    position: relative;
+    animation: zoomIn 2s;
+  }
+
+      .grid-external-pinboard h1 {
+        font-family: "Lobster";
+        font-size: 3rem;
+        text-align: center;
+        margin-top: 15px;
+      }
+
+      .grid-external-pinboard h2 {
+        border-bottom: 5px solid #d8d8d850;
+        text-align: center;
+        line-height: 150%;
+        margin: 25px 0px 10px 0px;
+      }
+
+      .grid-external-pinboard .pin {
+        position: absolute;
+        height: 76px; width: 76px;
+        left: 49%;
+        transform: translate(-49%, -5%);
+        top: 5%;
+        background-image: url(../img/pinboard-pin.png);
+        background-size: cover;
+        background-repeat: no-repeat;
+        z-index: 2;
+      }
+
+      .grid-external-pinboard .pinboard {
+        display: block;
+        position: relative;
+        width: 90%;
+        height: 80%;
+        background: rgb(248, 248, 248, 0.95);
+        box-shadow: 3px 3px 10px #00000030, inset 0 0 50px rgb(207, 207, 207);
+        border-radius: 10px;
+        overflow-y: scroll;
+        padding: 15px;
+      }
+
+          .grid-external-pinboard .pinboard div {
+            text-align: center;
+            margin: 10px 0px 10px 0px;
+
+          }
+
+          .grid-external-pinboard .pinboard table {
+            max-width: 100%;
+            margin: 0 auto;
+            overflow-x: auto;
+          }
+
+          .grid-external-pinboard .pinboard .pinboard-substitution {
+            overflow-x: auto;
+          }
+
+          .grid-external-pinboard .pinboard::-webkit-scrollbar, .grid-external-pinboard .pinboard .pinboard-substitution::-webkit-scrollbar {
+              background: transparent;
+              width: 0px;
+              height: 2px;
+              overflow: hidden;
+          }
+
+
+/* ################################################# */
+/* ############### MISC SECTION #################### */
+/* ################################################# */
+
+@keyframes egradefirstlaunch {
+  0% {
+    display: none;
+    opacity: 0;
+  }
+  50% {
+    display: none;
+    opacity: 0;
+  }
+  99% {
+    display: block;
+  }
+  100% {
+    display: none;
+    opacity: 1;
+  }
+}
+
+.egrade-first-launch-wrapper {
+  display: block;
+  position: absolute;
+  top: 0; left: 0;
+  background: #000;
+  color: var(--color-white);
+  min-height: 100%;
+  min-width: 100%;
+  z-index: 0;
+  font-size: 2rem;
+  text-align: center;
+  overflow: hidden;
+}
+
+.egrade-first-launch-wrapper .content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+}
+
+.egrade-first-launch-wrapper h2 {
+  font-family: "Lobster";
+  font-size: 6rem;
+  color: #fff;
+}
+
+.egrade-first-launch {
+  display: block;
+  min-height: 100%;
+  min-width: 100%;
+  overflow: hidden;
+  z-index: 999;
+  color: var(--color-white);
+  opacity: 0.99;
+  background-color: #0090dd;
+  background-image: url(../img/bg-ice.jpg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  text-shadow: 1px 1px 1px #00000050;
+  font-size: 1.2rem;
+  animation: egradefirstlaunch 6s;
+}
+
+.egrade-first-launch .content img {
+  max-width: 30vw;
+  max-height: 50vh;
+  float: left;
+  margin-right: 10px;
+  box-shadow: 1px 1px 5px rgba(0,0,0,0.6);
+}
+
+.egrade-first-launch .title {
+  display: flex;
+  align-items: center;
+  justify-content: space-around; 
+  width: 100%;
+  padding: 5px 5px 7px 5px;
+}
+
+.egrade-first-launch .egrade-first-launch-exit {
+  width: 32px; height: 32px;
+  background-image: url(../img/icon-exit-white.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 32px;
+  background-color: transparent;
+}
+
+.egrade-first-launch .egrade-first-launch-exit:active {
+  animation: pulse 1s;
+}
+
+.egrade-first-launch h1 {
+  font-family: 'Lobster';
+  color: #fff;
+  font-size: 3rem;
+  text-shadow: 1px 1px 5px #00000050;
+}
+
+.egrade-first-launch h3 {
+  color: #fff;
+  font-size: 1.2rem;
+  text-shadow: 1px 1px 1px #00000080;
+  text-align: left
+}
+
+.egrade-first-launch .title h3 {
+  font-size: 1.2rem;
+  text-shadow: 1px 1px 5px #00000080;
+  font-style: italic;
+  color: #fff;
+  border: none; border: 0;
+  line-height: 100%;
+  margin-top: 15px;
+  text-align: center;
+
+}
+
+.egrade-first-launch .content {
+  display: block;
+  padding: 20px;
+  margin: 5px 15px 5px 15px;
+  border-radius: 5px;
+  box-shadow: 1px 1px 10px rgba(44, 14, 14, 0.3);
+  max-height: 80vh;
+  overflow-y: scroll;
+  background-color: #0090dd;
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+@keyframes MsgBox {
+  75%   {opacity: initial;}
+  100% {opacity: 0;}
+}
+
+/* .MsgBox.good {
+  background: url(../img/icon-success.svg) rgb(15, 143, 100);
+  background-size: 32px;
+  background-position: 3% 50%;
+  background-repeat: no-repeat;
+}
+
+.MsgBox.info {
+  background: url(../img/icon-info.svg) rgb(15, 107, 143);
+  background-size: 32px;
+  background-position: 6% 50%;
+  background-repeat: no-repeat;
+}
+
+.MsgBox.error {
+  background: url(../img/icon-info.svg) rgb(119, 19, 19);
+  background-size: 32px;
+  background-position: 6% 50%;
+  background-repeat: no-repeat;
+}
+
+.MsgBox span {
+  display: block;
+  padding-left: 25px;
+} */
+
+.loading {
+  animation: fadeIn .5s;
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  /*background: rgba(0,0,0, 0.1);*/
+  background-image: url(../img/loading.svg);
+  background-size: 150px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  animation: 1s pulse infinite;
+  z-index: 4;
+}
+
+  .chats {
+    display: flex;
+    justify-content: space-evenly;
+    position: absolute;
+    padding: 20px;
+    top: 50%;
+    left: 50%;
+    border: 0;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    z-index: 5;
+  }
+
+    .chats-chats {
+      flex: 50%;
+      border-right: 1px solid #d8d8d8;
+    }
+
+  .dialogue {
+    animation: fadeIn .5s;
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0, 0.1);
+    backdrop-filter: blur(6px);
+    z-index: 4;
+  }
+
+  .dialogue a {
+    color: var(--color-mid-dark-grey);
+    font-size: 0.9rem;
+  }
+
+    .dialogue-content {
+      position: absolute;
+      min-height: 150px; 
+      min-width: 350px;
+      max-width: 30vw;
+      top: 50%;
+      left: 50%;
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+      padding: 25px;
+      border: 0;
+      font-size: 0.95rem;
+      text-align: justify;
+      letter-spacing: 1px;
+      background-color: rgb(245, 245, 245, 0.95);
+      outline: none;
+      -moz-border-radius: 4px;
+      border-radius: 4px;
+      -moz-box-shadow: 0 11px 15px -7px rgba(0,0,0,.2),0 24px 38px 3px rgba(0,0,0,.14),0 9px 46px 8px rgba(0,0,0,.12);
+      box-shadow: 0 11px 15px -7px rgba(0,0,0,.2), 0 24px 38px 3px rgba(0,0,0,.14), 0 9px 46px 8px rgba(0,0,0,.12);
+      z-index: 5;
+      line-height: 150%;
+      overflow: auto;
+      overscroll-behavior: contain;
+    }
+
+      .dialogue-content .btn-egrade {
+        padding: 10px 40px;
+      }
+
+      .dialogue-content select {
+        margin: 8px 0px 8px 0px;
+      }
+
+      .dialogue-content input:focus, .dialogue-content select:focus {
+        border-bottom: 1px solid var(--color-accent-header);
+      }
+
+      .dialogue-content .dialogue-icon-close {
+        display: block;
+        position: absolute;
+        right: 16px; top: 16px;
+        width: 40px; height: 40px;
+        background-image: url(../img/icon-close.svg);
+        background-size: 34px;
+        background-repeat: no-repeat;
+        background-position: center center;
+        z-index: 5;
+      }
+
+      .dialogue-content .dialogue-icon-close:hover {
+        cursor: pointer;
+        animation: pulse 1s infinite;
+      }
+
+      .dialogue-content .dialogue-icon-close.small {
+        right: 14px; top: 14px;
+        width: 28px; height: 28px;
+        background-size: 24px;
+      }
+
+      .dialogue-content a {
+        letter-spacing: 1px;
+      }
+
+      .dialogue-content.md {
+        width: 40vw;
+        max-width: 70vw;
+        max-height: 70vh;
+      }
+
+      .dialogue-content.lg {
+        width: 60vw;
+        max-width: 90vw;
+        max-height: 80vh;
+        background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23000000' fill-opacity='0.005' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E");
+      }
+
+      .dialogue-content.full {
+        display: block;
+        width: 100%;
+        min-height: 100%;
+        margin: 0;
+        overflow: auto;
+      }
+
+      .dialogue-content h2 {
+        margin-bottom: 15px;
+        margin-left: -2px; /* Optical purposes, box model is actually ok */
+      }
+
+      .dialogue-content h3 {
+        font-size: 1rem;
+        line-height: 150%;
+        font-weight: bolder;
+      }
+
+      .dialogue-content ul, .dialogue-content ol {
+        margin-top: 15px;
+        margin-bottom: 15px;
+        padding-left: 20px;
+      }
+
+      .dialogue-content ul {
+        display: block;
+        padding-left: 2px;
+        list-style-type: none;
+      }
+
+      .dialogue-content .box {
+        margin: 15px;
+      }
+
+      .dialogue-content .box.flex-50 {
+        flex-basis: 44% !important;
+      }
+
+.dialogue .dialogue-content.error {
+  color: #fff;
+  background: rgb(119, 19, 19);
+}
+
+.dialogue .dialogue-content.error h3 {
+  color: #fff;
+}
+
+.tooltip {
+  display: block;
+  position: absolute;
+  /* top: 97%;
+  right: 0; -- This will be done in JS */ 
+  padding: 8px;
+  color: #fff;
+  font-size: 0.8rem;
+  text-align: left;
+  background-color: var(--color-accent-header-user);
+  box-shadow: 1px 1px 8px #3f3f3f;
+  z-index: 5;
+}
+
+.notification-box {
+  display: block;
+  overflow: hidden;
+  padding: 10px;
+  box-shadow: 0px 0px 5px #b1b1b1;
+  border-radius: 3px;
+  opacity: .8;
+  font-size: .7rem;
+  letter-spacing: 1px;
+  line-height: 120%;
+  color: #fff;
+  text-shadow: 1px 1px 3px #000;
+  text-align: center;
+}
+
+.notification-box.info {
+  background: url(../img/icon-info.svg) rgb(15, 107, 143);
+  background-size: 24px;
+  background-position: 6% 50%;
+  padding-left: 45px;
+  background-repeat: no-repeat;
+}
+
+.notification-box.ok {
+  background: url(../img/icon-check-white.svg) rgb(15, 143, 100);
+  background-size: 30px;
+  background-position: 6% 50%;
+  padding-left: 45px;
+  background-repeat: no-repeat;
+}
+
+.text-rating-good {
+  color: rgb(15, 143, 100);
+}
+
+.text-attention {
+  color: rgb(167, 0, 0);
+}
+
+.inverter {
+  -webkit-filter: invert(100%);
+  filter: invert(100%);
+}
+
+.notransition {
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -o-transition: none !important;
+  transition: none !important;
+  animation: none !important;
+}
+
+/* ################################################################## */
+/* ######################## MOBILE SECTION ########################## */
+/* ################################################################## */
+
+/* CSS - MENU TOGGLER for JQUERY */
+
+.grid-main.smallMenu { 
+  /* No empty space between the classes to refer "smallMenu" to "grid-main" */
+  grid-template-columns: 80px 1fr 1fr !important;
+}
+
+.grid-main.bigMenu {
+  grid-template-columns: 100% 0fr 0fr;
+}
+
+.grid-main.closedMenu {
+  grid-template-columns: 0px 1fr 1fr;
+}
+
+/* ________________________________________  MAX: >=690PX: MOBILE - SMARTPHONE ___________________________________ */
+
+@media screen and (max-width: 690px), screen and (max-height: 690px) {
+
+  /* Mobile: Generic Containers & HTML */
+
+  html {font-size: 0.75rem;}
+
+  html, body {overflow: hidden;}
+
+  html, body, .grid-main {
+    height: 100% !important; /* For mobile browsers which may have large address bars */
+    width: 100% !important;
+    overflow: hidden;
+  }
+
+  .btn-egrade {
+    line-height: 110%;
+    font-size: 1rem;
+    padding: 2vw 6vw;
+    margin-top: 3px;
+  }
+      
+      .btn-egrade.icon {
+        text-indent: 0;
+        padding-left: 35px;
+      }
+
+      .btn-egrade .material-icons {
+        font-size: 18px;
+        left: 20px;
+      }
+
+  input, select {
+    font-size: 0.8rem;
+    padding: 8px;
+  }
+
+  .input-egrade, input[type="date"] {
+    width: 50%;
+  }
+
+  
+  direct-label {
+    font-size: 0.7rem;
+  }
+
+  direct-label.w-33 {
+    width: 50%;
+  }
+
+
+  .flex-25, .flex-33, .flex-50, .flex-75, .flex-100 {
+    flex-basis: 100% !important;
+  }
+
+  .flex-row {
+    display: block;
+    margin: 0;
+  }
+
+  .mobile-w-100 {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Mobile:  Header */
+
+  .grid-main > header {
+    background: #0083c9;
+    grid-template-columns: 1fr 1fr;
+
+  }
+
+    header h1 { 
+      margin: 0px 10px 0px 5px;
+    }
+
+    header > div:nth-of-type(2) {
+      grid-column: 2;
+      justify-self: flex-end;
+      margin-right: 50px;
+    }
+
+    header > div:nth-of-type(3) {
+      grid-column: 2;
+    }
+
+    header h1 {
+      font-size: 2.4rem;
+    }
+
+    header .header-burger-menu {
+      height: 24px;
+      width: 24px;
+      margin-left: 15px;
+    }
+
+    header .header-chat {
+      position: relative;
+      width: 50px;
+      background-size: 45%;
+      background-position: center center;
+    }
+
+      header .header-chat .message-notification {
+        position: absolute;
+        display: block;
+        top: 6px; right: 6px;
+        width: 13px; height: 13px;
+        padding-top: 4px;
+        padding-left: 1px;
+        font-size: .5rem;
+        color: #fff;
+        text-shadow: 1px 1px 1px #000;
+        text-align: center;
+        line-height: 100%;
+        box-shadow: 1px 1px 5px rgb(0,0,0,.5);
+        border-radius: 60px;
+        background: #c51515;
+      }
+
+    header .header-login {
+      width: 50px;
+    }
+
+    header .header-online-status {
+      font-size: 20px;
+    }
+
+    header .sub-menu {
+      top: 54px;
+    }
+
+  .grid-login form {
+    zoom: .8;
+  }
+
+   /* Mobile: General Grid */
+
+  .grid-main {
+    grid-template-columns: 0px 1fr 1fr;
+    grid-template-rows: 0.01fr 1fr;
+    transition: none !important;
+    overflow: hidden;
+    /* Maybe must be set due to TinyMce to auto */
+  }
+
+      .grid-main > main {
+        /* refers to Main in grid. Does not work when setting grid-main */
+        background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23000000' fill-opacity='0.01' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E");
+      }
+
+      .grid-main .col-50 {
+        flex-basis: 100%; /* Only one column on mobile mode */
+      }
+
+      .grid-main button, .grid-main a.button, .grid-main button a:link {
+        font-size: 1rem;
+      }
+
+      .grid-main .box.scroll-box {
+        max-height: initial;
+      }
+
+      .col-reports .box {
+        flex-basis: 100%;
+      }
+
+      .grid-reports, .grid-shared-reports, .grid-single-student, .grid-pinboard {
+          display: block;
+          overflow-x: hidden;
+        }
+
+  /* Mobile: Navigation */
+
+  nav {
+    background-image: url(../img/bg-school-nav.jpg);
+  }
+
+  nav .main-menu {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: left; /* Horizontal pseudo centering */
+    align-content: flex-start; /* Vertical pseudo centering */
+    justify-items: center;
+    margin: 0px 0px 0px 10px;
+    overflow-y: overlay;
+    z-index: 1; /* To overlay the app */
+  }
+
+  nav .main-menu a {
+    margin-top: 60px;
+  }
+
+  nav .main-menu.mobileHandler {
+    display: none;
+  }
+  
+  nav span.mobileHandler {
+    display: none;
+    /* To hide textes in closed or small view */
+  }   
+
+  nav a {
+    font-size: 1.1rem;
+    width: 40vw; /* To create an equal, centerd row of items */
+    margin: 3vw;
+  }
+
+  .grid-main > footer {
+    display: none;
+  }
+
+
+  /* Mobile: Create_Reports */
+
+  .col-students {
+    animation: slideInDown 1s;
+  }
+
+      .col-students table {
+        max-height: 100%;
+        display: table;
+      }
+
+      .col-students button {
+        max-width: 49%;
+      }
+
+  .col-print-preview .din-a4, .col-print-preview #din-a4 {
+    width: calc(21cm / 2.5);
+    height: calc(29.6cm / 2.5);
+  }
+
+  .grades-container table.table-grades tbody tr td  {
+    width: 100%;
+  }
+
+  .competences, .grades-container {
+    zoom: 0.75;
+  }
+
+      table.table-competences thead {
+        font-size: 0.7rem;
+        line-height: 140%;
+      }
+
+      table.table-competences tbody td:nth-child(1) {
+        overflow: hidden;
+        hyphens: auto;
+        word-break: break-all;
+      }
+
+  .col-single-student-info .box {
+    flex-basis: 100%;
+  }
+
+  .col-students .btn-save {
+    justify-self: flex-end;
+    align-self: stretch;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .col-print-preview {
+    /* zoom: 0.5; */
+    padding-bottom: 50px;
+  }
+
+  .col-print-preview .pdf-pages {
+    position: absolute;
+    top: calc(29.6cm / 2.5);
+    padding-top: 35px;
+}
+
+  .notification-box.info {
+    background: url(../img/icon-info.svg) rgb(15, 107, 143);
+    background-size: 16px;
+    background-position: 6% 50%;
+    padding-left: 40px;
+    background-repeat: no-repeat;
+  }
+  
+  .notification-box.ok {
+    background: url(../img/icon-check-white.svg) rgb(15, 143, 100);
+    background-size: 20px;
+    background-position: 6% 50%;
+    padding-left: 40px;
+    background-repeat: no-repeat;
+  }
+
+   /* Mobile: My_Classes */
+
+  .grid-my-classes {
+    display: block;
+    padding: 0;
+  }
+
+  .box.icon {
+    background-position: 98% 3%;
+    background-size: 28px;
+    background-repeat: no-repeat;
+  }
+
+  /* Mobile: School Class Details*/
+
+  .grid-school-class-details {
+    display: block;
+    column-count: unset;
+    width: auto;
+    margin: 0px 12px 0px 8px;
+  }
+
+      .grid-school-class-details .box {
+        margin: 5px;
+      }
+
+      .grid-table.student-list {
+        max-height: 100%;
+        overflow-x: auto;
+        padding-right: 15px;
+      }
+
+  /* Mobile: Single Student */
+
+  .col-single-student-info {
+    padding: 20px;
+  }
+
+  /* Mobile: Shared Reports */
+
+  .col-shared-sidebar {
+    display: block;
+    font-size: 0.9rem;
+    animation: slideInDown 1s;
+  }
+
+  /* Mobile: Pinboard  */
+
+  .col-pinboard-main {
+    padding: 20px;
+  }
+
+
+  /* Mobile: Pinboard External */
+
+  .grid-external-pinboard {
+    zoom: 1 !important;
+    height: 100%;
+  }
+    .grid-external-pinboard h1 {
+      margin-top: 5px;
+    }
+
+    .grid-external-pinboard .pinboard {
+      width: 90%;
+      height: 95%;
+    }
+
+    .grid-external-pinboard .pinboard .container {
+      width: 100%;
+    }
+
+    .grid-external-pinboard .pin {
+      width: 32px; height: 32px;
+      top: 10px;
+    }
+
+    .grid-external-pinboard table {
+      zoom: 0.6;
+    }
+
+  /* Mobile: Admin_School */
+
+  .box.box-template-config {
+    margin-top: 20px !important;
+  }
+
+  /* Mobile: Misc */
+
+  .classes {line-height: 1.5rem;}
+
+  /* .grid-main > nav a {
+    margin: 8vh 0 0 0;
+  } */
+
+  .grid-main > footer {
+    font-size: .6rem;
+  }
+
+  /* Mobile: Dialogues, Dialogue Content */
+
+  .dialogue-content {
+    min-width: 100vw;
+    max-width: 100vw;
+    border-radius: 0;
+  }
+
+ .dialogue-content.full-mobile {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-height: 100%;
+    margin: 0;
+    overflow: auto;
+ }
+
+ .dialogue-content.full-mobile .box {
+    flex-basis: 100% !important;
+    margin: 3px;
+  }
+
+  .dialogue button {
+    margin: 3px 0px 3px 0px;
+  }
+
+  .dialogue-content .dialogue-icon-close {
+    display: block;
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    width: 30px;
+    height: 30px;
+    background-image: url(../img/icon-close.svg);
+    background-size: 24px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    z-index: 5;
+}
+  
+}
+
+/* ________________________________________  MAX: 1250PX - TABLET DEVICES / LANDSCAPE ___________________________________ */
+
+@media screen and (max-width: 1249px) and (min-width: 691px) { /* min-width = previous breakpoint */
+
+  /* Tablet: Generic & HTML */
+
+  html {font-size: 0.9rem;}
+  
+  header .sub-menu {
+    display: none;
+    position: absolute;
+    top: 70px;
+    right: 0px;
+  }
+
+  .grid-main {
+    display: grid;
+    height: 100vh;
+    width: 100vw;
+    grid-template-rows: 71px 1fr 0px;
+  }
+
+  .box p {
+    line-height: 1.5rem;
+    margin: 20px 0px 20px 1px;
+  }
+
+  /* Tablet: Create_Reports */
+
+  .grid-reports {
+      grid-template-columns: 220px minmax(0, 1fr); /* I use minmax here, to basically don't exceed the width of the browser's window.
+      Otherwise, if I'd use only 1fr for example, the <div> container for Medium Editor would increase its width dynamically,
+      so that vertical scrollbars would be appended finally. Only required if <div> can be filled with dynamic user content. */
+      grid-area: main; /* referes to Main in .grid-main */
+  }
+
+    #print-preview-object {
+      overflow: hidden !important; 
+      width: 100%; 
+      height: calc(100% + 10px);
+    }
+
+    .col-reports .box {
+      flex-basis: 100%;
+    }
+
+    .col-students {
+      grid-row: 1;
+    }
+
+    .col-reports {
+      grid-row: 1;
+      grid-column: 2;
+    }
+        table.table-competences {
+          zoom: 0.9;
+        }
+
+    .col-print-preview {
+      grid-row: 2; /* In second row now */
+      grid-column: 1/-1; /* This hack uses both columns, stretches */
+      padding-bottom: 60px; /* For page navigation in PDF */
+    }
+
+      .col-print-preview .pdf-pages {
+        position: absolute;
+        top: calc((29.6cm / 1.7) + 40px);
+      }
+
+    .dialogue-content.md {
+      min-width: 75vw;
+    }
+
+    .dialogue-content.lg {
+      min-width: 90vw;
+    }
+
+  /* Tablet: School Class Details*/
+
+  .grid-school-class-details {
+    column-count: 1;
+  }
+
+      .grid-table.student-list {
+        max-height: 100%;
+        overflow-x: auto;
+        padding-right: 15px;
+      }
+  
+}
+
+/* ________________________________________  MAX: 1620PX - TABLET, NOTEBOOKS / LANDSCAPE ___________________________________ */
+
+@media screen and (max-width: 1620px) and (min-width: 1250px) { /* min-width = previous breakpoint */
+
+  html {font-size: 0.9rem;}
+
+  .grid-main {
+    display: grid;
+    height: 100vh;
+    width: 100vw;
+    grid-template-rows: 71px 1fr 45px;
+  }
+
+  .col-print-preview .din-a4 {
+    width: calc(21cm / 2);
+    height: calc(31cm / 2); /* 29.6 actually for DIN-A4 */
+  }
+
+  .col-print-preview #din-a4 {
+    width: calc(21cm / 2);
+    height: calc(31cm / 2); /* 29.6 actually for DIN-A4 */
+  }
+
+    .col-print-preview .din-a4 .report {
+      transform: scale(calc(1 / 2));
+      transform-origin: 0% 0% 0px;
+    }
+
+    .col-reports .box {
+      flex-basis: 100%;
+    }
+
+  #print-preview-object {
+    overflow: hidden !important; 
+    width: 100%; 
+    height: calc(100% + 10px);
+  }
+
+}
+
+/* ________________________________________  MAX: 1800PX - SOME THINGS ONLY WORK IN FHD+4K, 
+HERE'S THEIR HANDLING FOR SMALLER SCREENS ___________________________________ */
+
+@media screen and (max-width: 1800px) {
+
+  .col-single-student {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* align horizontal */
+    align-content: flex-start; /* Don't stretch items */
+  }
+
+    .col-single-student * {
+      flex-basis: 100%;
+      text-align: center !important;
+    }
+
+    .col-single-student img {
+      margin-top: 8px;
+      margin-bottom: 8px;
+    }
+
+}
+
+/* ________________________________________  MIN: >=2160PX: SCREENS WHICH ARE BIGGER THAN USUAL, 21:9 ___________________________________ */
+
+@media screen and (min-width: 2160px) {
+
+  .grid-my-classes {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .col-print-preview .din-a4 {
+    zoom: 1.2 !important;
+  }
+
+}
+
+/* ################################################# */
+/* ############### PRINT SECTION ################### */
+/* ################################################# */
+
+@media print {
+
+
+}
+
+/* ################## DOCUMENTATION #####################
+
+GRID vs. FLEXBOX
+--------------------------------------------------------------------------------------------------------------- 
+
+Grid: If you want to manually control areas, e.g. basic layouting. = Content Placement
+Flexbox: If you want to create a fluid layout and let CSS do the aligning, e.g. sub-layouting. = Content Flow
+
+The place-self CSS property is a shorthand property sets both the align-self and justify-self properties. 
+The first value is the align-self property value, the second the justify-self one. 
+If the second value is not present, the first value is also used for it.
+
+The place-content CSS property is a shorthand for align-content and justify-content. 
+It can be used in any layout method which utilizes both of these alignment values.
+
+Class vs. Class
+--------------------------------------------------------------------------------------------------------------- 
+
+.class .class matches any elements of class .class that are descendants of another element with the class .class.
+
+.class.class matches any element with both classes.
+
+Notes:
+~~~~~~~~~~~~
+
+Es ist wichtig zu verstehen, dass ein Container, der entweder als Flexbox oder Grid deklariert wird, auch als solcher fungiert
+und eben nicht "nacheinander" im Template verwendet werden darf, wie vermutet wird. Wird ein .container als Flex oder Grid definiert,
+passen sich alle Child-Element nach diesem Muster an, die hingegen, sofern keine komplexeren Layouts erstellt werden, keiner weiteren
+Definition bedürfen. Werden hingegen "sub-grids" erstellt oder weitere Flexboxen, dient ein weiterer Container wieder als "wrapper",
+und die Child-Element dieses Containers passen sich dann den Definitionen an.
+
+Child-Container werden grundsätzlich nur in ihrer Größe definiert, wie z.B. "col-50", das eine grundlegende Bereite von flex: 50 hat.
+Sie erhalten allerdings selbst kein weiteres "display: flex" oder "display: grid", sofern sie nicht eben als solche fungieren.
+Wenn sie "nach dem Parent" funktionieren sollen, sind es schlicht und einfach ganz normale Blöcke, die nach "Parent" positioniert werden.
+
+Comments:
+~~~~~~~~~~~~
+
+flexbox looks like it does what you want
+but grid is usually what you want
+
+Grid makes actual columns and rows. Content will line up from one to the other, as you ask it to. Flexbox doesn’t. 
+Not only in the second dimension (which is easiest to talk about), but also in the first dimension. Flexbox 
+isn’t for most of the things we’ve been using it for.
+
+How about this:#Flexbox is for alignment. #CSSGrid is for layout. 
+
+This is almost always how I wind up using them. It allows them to preserve their relationships to one another. 
+It also allows each to be used for its strength, even though each can do the other thing.
+
+If you start constraining all your flex items with a width, then more often than not it will be easier to use grid.
+
+For me Grid is there to great full layout..grids...
+with more control over how the whole are/page comes together, whereas flexbox helps me to position and align 
+(whether it’s in a grid or not). 
+
+Use grid when you already have the layout structure in mind, and flex when you just want everything to fit. Layout first vs content first.
+
+https://stackoverflow.com/questions/40740553/what-is-the-difference-between-align-items-vs-align-content-in-grid-layout
+https://stackoverflow.com/questions/32551291/in-css-flexbox-why-are-there-no-justify-items-and-justify-self-properties
+https://stackoverflow.com/questions/35049262/difference-between-justify-content-vs-align-items
+https://blog.kulturbanause.de/2013/07/einfuhrung-in-das-flexbox-modell-von-css/
+https://medium.com/youstart-labs/beginners-guide-to-choose-between-css-grid-and-flexbox-783005dd2412
+https://stackoverflow.com/questions/32551291/in-css-flexbox-why-are-there-no-justify-items-and-justify-self-properties
+https://css-tricks.com/snippets/css/a-guide-to-flexbox/
+https://gridbyexample.com/examples/example21/
+
+Ridiculously easy row and column layouts with Flexbox:
+
+https://dev.to/drews256/ridiculously-easy-row-and-column-layouts-with-flexbox-1k01
+
+*/
+
+/* ################## BACKUP ##########################
+
+:root {
+  --color-accent-header: #3c4f72;
+  --color-accent-header-user: #323c50;
+  --color-accent-header-chat: #00e1ff1f;
+  --color-accent-nav: #e6e6e6;
+  --color-accent-main: linear-gradient(90deg, rgba(245,245,245,1) 0%, rgba(232,232,232,1) 100%);
+  --color-accent-footer: #282830;
+  --color-box-shadow-nav: #a7a7a7;
+  --color-main-bg-color: #f1f1f1;
+  --color-black: #000;
+  --color-dark-grey: #292929;
+  --color-mid-dark-grey: #3f3f3f;
+  --color-mid-light-grey: #888888;
+  --color-light-grey: #e4e4e4;
+  --color-nice-blue: rgb(0, 186, 243);
+  --color-white: #fff;
+  --image-main-image: url(../img/background.jpg);
+  --image-halloween: url(../img/Halloween-2019.jpg);
+}
+
+*/

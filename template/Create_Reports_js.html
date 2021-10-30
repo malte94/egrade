@@ -1,0 +1,606 @@
+
+<!-- _________________ INCLUDES _______________________ -->
+
+<link rel="stylesheet" href="{{ global_App_Url }}/template/css/tinymce.css">
+
+<!-- ________________ Global Scriptings to be executed from each template _____________________ -->
+
+<script> /* type=module is not used here, because functions should be registered / executed / accessable from every template */
+
+var urlCurrentReport = "{{ urlReport }}{{ selectedStudent.getStudentID }}".replace(/&amp;/g,'&');
+var currentForm = "{{ school_class_template.getTemplateModuleName }}";
+var pdfNumPages = 0;
+var validatedTinyMCE = false;
+var validatedInputs = false;
+var validatedRadios = false;
+var validatedTextArea = false;
+var colAniPlayed;
+var i = 0;
+
+/* __________________________ Initial Loading __________________________ */
+
+ 
+if(wasLoaded["create_reports"] !== true) {
+
+$.getScript('{{ global_App_Url }}/template/js/pdf.js')
+    .done(function( script, textStatus ) {
+        $.getScript('{{ global_App_Url }}/template/js/pdf.worker.js')
+            .done(function( script, textStatus ) {
+                if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('{{ global_App_Url }}/template/js/pdf.worker.js', { scope: '{{ global_App_Url }}/template/js/' }).then(function(reg) {
+                // Registrierung erfolgreich
+                console.log('PDF Worker registered successfully. Scope is ' + reg.scope);
+                }).catch(function(error) {
+                // Registrierung fehlgeschlagen
+                console.log('Registrierung fehlgeschlagen mit ' + error);
+                });
+                };
+                setTimeout(() => pdfJSPreview(), 700);
+            })
+        })
+
+} else {
+setTimeout(() => pdfJSPreview(), 700);
+}
+
+if(wasLoaded["tinymce"] !== true) {
+
+$.getScript('{{ global_App_Url }}/template/js/tinymce/tinymce.min.js')
+    .done(function( script, textStatus ) {
+        setTimeout(() => activateTinyMCE(), 500);
+        wasLoaded["tinymce"] = true;
+    })
+} else {
+    activateTinyMCE();
+}
+
+CtrlS(); 
+
+reportsNotificationBox();
+
+/* __________________________ Routes __________________________ */
+
+viewRouting("button.btn-class", '', '&is_ajax=1&showClassesDialogue=1', 3, 'html', '');
+viewRouting("button.btn-class-variables", '', '&is_ajax=1&showClassesVariables=1', 3, 'html', '');
+viewRouting("button.btn-student-variables", '', '&is_ajax=1&showStudentVariables=1', 3, 'html', '');
+viewRouting("button.btn-delete-report", '', '&is_ajax=1&deleteReport=1', 3, 'html', '');
+viewRouting("button.btn-print-report", '', '&is_ajax=1&printReport=1', 3, 'html', '');
+
+/* ____________________________ Retrieve & Save Data from/to Server _______________________________ */
+
+function getReportData(Prefix) {
+
+    $( document ).ready(function() {
+
+    $.ajax({
+        async: true, 
+        type: "GET",
+        url: urlCurrentReport + "&action=printModel&is_ajax=1",
+        dataType: "json",
+        timeout: 8000,
+        })
+        .always(function () {
+
+        })
+        .fail(function () {
+            toastr.error("Leider konnten die Kompetenzfelder nicht abgerufen werden.");
+            return;
+        })
+        .done(function (data) {
+            
+            console.log(data);
+
+            if (data.data.competences) {
+
+                $.each(data.data.competences, function(key, value){
+                    if (!value <= 0) {
+                    $('[name="' + key + '"]').val([value]);
+                    }
+                });
+
+                toastr.success("Die Kompetenzfelder wurden eingelesen.");
+
+            }
+
+            if (data.data.grades) {
+
+                $.each(data.data.grades, function(key, value){
+
+                    switch(value) {
+                        case "1": 
+                            $('input[name="' + key + '"]').val("1");
+                            Prefix ? $('td[name="' + key + '"]').html("Note: sehr gut") : $('td[name="' + key + '"]').html("sehr gut");
+                        break;
+                        case "2": 
+                            $('input[name="' + key + '"]').val("2");
+                            Prefix ? $('td[name="' + key + '"]').html("Note: gut") : $('td[name="' + key + '"]').html("gut");
+                        break;
+                        case "3": 
+                            $('input[name="' + key + '"]').val("3");
+                            Prefix ? $('td[name="' + key + '"]').html("Note: befriedigend") : $('td[name="' + key + '"]').html("befriedigend");
+                        break;
+                        case "4": 
+                            $('input[name="' + key + '"]').val("4");
+                            Prefix ? $('td[name="' + key + '"]').html("Note: ausreichend") : $('td[name="' + key + '"]').html("ausreichend");
+                        break;
+                        case "5": 
+                            $('input[name="' + key + '"]').val("5");
+                            Prefix ? $('td[name="' + key + '"]').html("Note: mangelhaft") : $('td[name="' + key + '"]').html("mangelhaft");
+                            $('td[name="' + key + '"]').addClass("text-danger");
+                        break;
+                        case "6":
+                            $('input[name="' + key + '"]').val("6");
+                            Prefix ? $('td[name="' + key + '"]').html("Note: ungenügend") : $('td[name="' + key + '"]').html("ungenügend");
+                            $('td[name="' + key + '"]').addClass("text-danger");
+                        break;
+                        case "-1":
+                            $('input[name="' + key + '"]').val("-1");
+                            $('td[name="' + key + '"]').html("&lt; offen &gt;");
+                            $('td[name="' + key + '"]').addClass("text-warning-darker");
+                        break;
+                        case "0":
+                            $('input[name="' + key + '"]').val("-1");
+                            $('td[name="' + key + '"]').html("&lt; offen &gt;");
+                            $('td[name="' + key + '"]').addClass("text-warning-darker");
+                        break;
+                        case -1:
+                            $('input[name="' + key + '"]').val("-1");
+                            $('td[name="' + key + '"]').html("&lt; offen &gt;");
+                            $('td[name="' + key + '"]').addClass("text-warning-darker");
+                        break;
+                    }
+
+                });
+
+                toastr.success("Die Noten wurden eingelesen.");
+
+            }
+
+            reportsNotificationBox();
+
+        })
+
+    });
+
+}
+
+function clickGrades(Prefix) {
+
+    $("td.final-grade").click(function() {
+
+        $(this).removeClass().addClass("final-grade");
+
+        let saveName = $(this).attr("name"); 
+        /* td Element has the same [name]-attribute as the respective input to submit data. 
+        So we will get it from clicked td and use it to set values in the corresponding input field. */
+
+        switch($("input[name=" + saveName + "]").val()) {
+            case "1": 
+                $("input[name=" + saveName + "]").val("2");
+                Prefix ? $(this).html("Note: gut") : $(this).html("gut");
+            break;
+            case "2":
+                $("input[name=" + saveName + "]").val("3");
+                Prefix ? $(this).html("Note: befriedigend") : $(this).html("befriedigend");
+            break;
+            case "3":
+                $("input[name=" + saveName + "]").val("4");
+                Prefix ? $(this).html("Note: ausreichend") : $(this).html("ausreichend");
+            break;
+            case "4":
+                $("input[name=" + saveName + "]").val("5");
+                Prefix ? $(this).html("Note: mangelhaft") : $(this).html("mangelhaft");
+                $(this).addClass("text-danger");
+            break;
+            case "5":
+                $("input[name=" + saveName + "]").val("6");
+                Prefix ? $(this).html("Note: ungenügend") : $(this).html("ungenügend");
+                $(this).addClass("text-danger");
+            break;
+            case "6":
+                $("input[name=" + saveName + "]").val("-1");
+                $(this).html("&lt; offen &gt;");
+                $(this).addClass("text-warning-darker");
+            break;
+            case "-1":
+                $("input[name=" + saveName + "]").val("1");
+                Prefix ? $(this).html("Note: sehr gut") : $(this).html("sehr gut"); 
+            break;
+            case -1:
+                $("input[name=" + saveName + "]").val("1");
+                Prefix ? $(this).html("Note: sehr gut") : $(this).html("sehr gut");  
+            break;
+        }
+
+    submit("#" + currentForm);
+
+    reportsNotificationBox();
+
+    });
+
+}
+
+/* ___________________________________ Saving Logics ________________________________________ */
+
+$(document).ready(function() {
+    window.onbeforeunload = function(){
+        tinyMCE.triggerSave();
+        submit("#{{ school_class_template.getTemplateModuleName }}");
+    }
+});
+
+/*
+$("input:").focusout(() => {
+    submit("#{{ school_class_template.getTemplateModuleName }}");
+    reportsNotificationBox();
+}); */
+
+$("input:radio").click(function(){
+    submit("#{{ school_class_template.getTemplateModuleName }}");
+    reportsNotificationBox();
+});
+
+function CtrlS() {
+
+    $('body', 'html').off();
+        $("body").on("keydown", function (e) {
+            if(e.ctrlKey && (e.which == 83)) {
+                tinyMCE.triggerSave();
+                submit("#{{ school_class_template.getTemplateModuleName }}", "Das Zeugnis wurde gespeichert.");
+                pdfJSPreview();
+                reportsNotificationBox();
+            return false;
+        }
+    });
+
+}
+
+/* _________________________________ TinyMCE __________________________________ */
+
+function activateTinyMCE() { 
+
+
+    tinymce.suffix = '.min'; // For Async Load, not required when <script> is used
+    tinyMCE.baseURL = "{{ global_App_Url }}/template/js/tinymce";  // For Async Load, not required when <script> is used
+
+    $(".tox").remove();
+    tinymce.remove(); 
+
+    tinymce.init({
+        forced_root_block : "",
+        forced_root_block : false, 
+        force_br_newlines : false,
+        selector: '.defaultEditor',
+        plugins: "code, fullscreen, pagebreak", /* Maybe activating 'autoresize' would be an option */
+        menubar: false,
+        paste_auto_cleanup_on_paste : true,
+        paste_remove_styles: true,
+        paste_remove_styles_if_webkit: true,
+        directionality : 'de',
+        language: 'de',
+        resize: false,
+        strict_loading_mode : true,
+        /*statusbar: false,*/
+        toolbar: 'undo redo ' +
+        'bold italic underline ' +
+        'removeformat pagebreak fullscreen code ',
+        content_css: '{{ global_App_Url }}/template/css/tinymce_iframe.css',
+        branding: false,
+
+        init_instance_callback: function(editor) {
+        editor.on('focusout', function(e) {
+            tinyMCE.triggerSave();
+            submit("#{{ school_class_template.getTemplateModuleName }}");
+            reportsNotificationBox();
+        });
+
+        editor.addShortcut("ctrl+s", "Custom Ctrl+S", "custom_ctrl_s");
+            editor.addCommand("custom_ctrl_s", function() {
+                tinyMCE.triggerSave();
+                submit("#{{ school_class_template.getTemplateModuleName }}", "Das Zeugnis wurde gespeichert.");
+                pdfJSPreview();
+        });
+
+        }
+
+    });
+
+    /* Clean Up */
+
+    $( "nav a" ).click(function() {
+        $('body', 'html').off();
+        $(".tox").remove();
+        tinymce.remove(); 
+    });
+
+}
+
+/* ________________________________ Live Preview: PDF.JS Implementation ____________________________________ */
+
+var pdfDoc = null;
+var pageRendering = false;
+var pageNumPending = null;
+var pageNumRuntime = 1;
+var pdfJsHasLoaded = false;
+var pdfjsLib = window['pdfjs-dist/build/pdf'];
+var pdfJsUrl = "{{ urlReport }}{{ selectedStudent.getStudentID }}&printGrade=1".replace(/&amp;/g,'&');
+
+function pdfJSPreview() {
+       
+    $('.col-print-preview .din-a4').append('<span class="load-preview"></span>');
+
+    pdfjsLib.GlobalWorkerOptions.workerSrc = '{{ global_App_Url }}/template/js/pdf.worker.js';
+
+    var pageNum = pageNumRuntime;
+    const scale = 1.2;
+    const rotation = 0;
+    const canvas = document.getElementById('din-a4');
+    const ctx = canvas.getContext('2d');
+
+    /**
+     * Get page info from document, resize canvas accordingly, and render page.
+     * @param num Page number.
+     */
+
+    function renderPage(num) {
+       
+    pageRendering = true;
+
+    pdfDoc.getPage(num).then(function(page) {
+        var viewport = page.getViewport({scale: scale, rotation: rotation});
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+
+        var renderContext = {
+        canvasContext: ctx,
+        viewport: viewport
+        };
+
+        var renderTask = page.render(renderContext);
+
+        renderTask.promise.then(function() {
+        pageRendering = false;
+        if (pageNumPending !== null) {
+            renderPage(pageNumPending);
+            pageNumPending = null;
+        }
+        });
+
+    });
+
+    document.getElementById('pdf-num').textContent = num;
+
+    }
+
+    function queueRenderPage(num) {
+    if (pageRendering) {
+        pageNumPending = num;
+    } else {
+        renderPage(num);
+    }
+    }
+
+    function onPrevPage() {
+    if (pageNum <= 1) {
+        return;
+    }
+    pageNum--;
+    pageNumRuntime = pageNum;
+    queueRenderPage(pageNum);
+    }
+
+    $( "#pdf-prev" ).click(function() {
+        onPrevPage();
+    });
+
+    /**
+     * Displays next page.
+     */
+    function onNextPage() {
+    if (pageNum >= pdfDoc.numPages) {
+        return;
+    }
+    pageNum++;
+    pageNumRuntime = pageNum;
+    queueRenderPage(pageNum);
+    }
+
+    $( "#pdf-next" ).click(function() {
+        onNextPage();
+    });
+
+    pdfjsLib.getDocument(pdfJsUrl).promise.then(function(pdfDoc_) {
+    pdfDoc = pdfDoc_;
+    document.getElementById('pdf-counter').textContent = pdfDoc.numPages;
+
+    renderPage(pageNumRuntime);
+
+    $(".col-print-preview .load-preview").remove(); 
+    console.log("PDF.js: Rendered.");
+
+    pdfJsHasLoaded = true;
+
+    });
+
+}
+
+$(".din-a4").click(function() {
+    tinyMCE.triggerSave();
+    submit("#{{ school_class_template.getTemplateModuleName }}");
+    pdfJSPreview();
+});
+
+/* ___________________________________________ Miscellaenous ___________________________________________ */
+
+function reportsNotificationBox() {
+
+console.log("reportsNotificationBox executed.");
+
+$('input').each(function() {
+    var checkName = $(this).attr("name");
+        if(!$(this).val() || $(this).val() < 0) {
+            validatedInputs = false;
+            return false;
+        } else {
+            validatedInputs = true;
+        }
+    });
+
+if ($('input[type=radio]').length) {
+
+    $('input:radio').each(function() {
+        var checkName = $(this).attr("name");
+            if(!$("input:radio[name="+checkName+"]").is(":checked")) {
+                validatedRadios = false;
+                return false;
+            } else {
+                validatedRadios = true;
+            }
+        });
+
+    } else {
+        validatedRadios = true;
+}
+
+
+$("textarea").each(function(){
+    if(!$(this).val()){
+        validatedTextArea = false;
+        return false;
+    } else {
+        validatedTextArea = true;
+    }
+});
+
+if (validatedInputs == true && validatedTextArea == true && validatedRadios == true) {
+    $(".notification-box").empty();
+    $(".notification-box").removeClass("info");
+    $(".notification-box").addClass("ok");
+    $(".notification-box").append("Das ausgewählte Zeugnis ist vollständig bearbeitet.");
+    $(".current-status-span").html("done");
+} else {
+    $(".notification-box").empty();
+    $(".notification-box").removeClass("ok");
+    $(".notification-box").addClass("info");
+    $(".notification-box").append("Das ausgewählte Zeugnis ist unvollständig.");
+    $(".current-status-span").html("clear");
+    }
+}
+
+function resetCompentenceRadioOnClick() {
+    var altPressed = false;
+
+    $(window).keydown(function(evt) {
+        if (evt.which == 18) { // alt
+        altPressed = true;
+    }
+    }).keyup(function(evt) {
+        if (evt.which == 18) { // alt
+        altPressed = false;
+        }
+    });
+
+    $("input:radio").click(function(){
+        if (altPressed == true) {
+            let saveName = $(this).attr("name"); 
+            $("input[name=" + saveName + "]").attr('checked', false);
+            $("input[name=" + saveName + "]").prop("checked", false);
+            submit("#" + currentForm);
+            reportsNotificationBox();
+        }
+    });
+}
+
+/* Some Styling & Scroll automatically to Selected Student in .col-students */
+
+try {
+    var scrollToCurrentStudent = document.querySelector(".selected-student");  
+    scrollToCurrentStudent.scrollIntoViewIfNeeded(true); 
+}
+catch (e) {
+    console.warn("scrollIntoViewIfNeeded could not be used, probably Firefox ...");
+}
+
+/* ______________________________________ Subview: Delete Report (Block) ____________________________________ */
+
+$('html').off(); // Unbind everything since global listeners are used in this file. That's no problem since each view re-registers its "global listeners".
+
+$('html').on( "click", "#btnDeleteReport", function() { // hack to only register once
+
+alert("Das kommt noch ...")
+
+});
+
+/* ______________________________________ Subview: Customize Template Variables (Block) ____________________________________ */
+
+$('html').on( "focusout", ".class-template-variables .template-variables", function() { // hack to only register once
+
+var template_vars = {
+    valuetype: $(this).data("valuetype"),
+    varname: $(this).data("varname"),
+    value : $(this).val(),
+    name : $(this).attr('name'),
+    id : $(this).attr('id'),
+    templatevarid : $(this).data('templatevarid'),
+    idtemplate : $(this).data('idtemplate')
+};
+
+console.log("Sent: " + template_vars);
+
+$.post( urlCurrentReport + "&is_ajax=1&action=updateClasssTemplateVariables", { data: template_vars })
+    .done(function( data ) {
+
+        if(data.success == true)
+        {
+            toastr.success("Eingabe erfolgreich gespeichert");
+        }else{
+            toastr.error("Ein Fehler beim Speichern der Daten ist aufgetreten");
+        }
+    })
+    .fail(function(){
+        toastr.error("Es scheint ein Fehler mit deiner Verbindung zu geben. Deine Eingaben wurden möglicherweise nicht gespeichert.");
+    });
+
+console.log(template_vars);
+
+});
+
+$('html').on( "focusout", ".student-template-variables .template-variables", function() { // hack to only register once
+
+var template_vars = {
+    valuetype: $(this).data("valuetype"),
+    varname: $(this).data("varname"),
+    value : $(this).val(),
+    name : $(this).attr('name'),
+    id : $(this).attr('id'),
+    templatevarid : $(this).data('templatevarid'),
+    idtemplate : $(this).data('idtemplate')
+};
+
+console.log("Sent: " + template_vars);
+
+$.post( urlCurrentReport + "&is_ajax=1&action=updateStudentTemplateVariables", { data: template_vars })
+    .done(function( data ) {
+
+        if(data.success == true)
+        {
+            toastr.success("Eingabe erfolgreich gespeichert");
+        }else{
+            toastr.error("Ein Fehler beim Speichern der Daten ist aufgetreten");
+        }
+    })
+    .fail(function(){
+        toastr.error("Es scheint ein Fehler mit deiner Verbindung zu geben. Deine Eingaben wurden möglicherweise nicht gespeichert.");
+    });
+
+console.log(template_vars);
+
+});
+
+$('html').on( "click", ".close-variables-dialogue", function() {
+    closeDialogue();
+});
+
+wasLoaded["create_reports"] = true;
+
+</script>

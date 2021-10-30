@@ -1,0 +1,96 @@
+{% include 'Header.html' %}
+<main>
+    <div class="grid-my-classes">
+        <div class="box icon icon-my-classes-students">
+            <h2>Klassenübersicht</h2>
+            <p>Die folgenden Klassen sind Ihnen zugeordnet.</p>
+            <div class="grid-table table-col-5">
+                <span>
+                <strong>Name</strong>
+                </span>
+                <span>
+                <strong>Jahrgang</strong>
+                </span>
+                <span>
+                <strong>Schüler</strong>
+                </span>
+                <span>
+                <strong>Stufe</strong>
+                </span>
+                <span>
+                <strong>Halbjahr</strong>
+                </span>
+                {% for schoolClass in schoolClasses|sort((a, b) => a.getSchoolClassName <=> b.getSchoolClassName) %}
+                    <span><a href="{{UrlSchoolClass}}{{schoolClass.getSchoolClassId}}">Klasse {{schoolClass.getSchoolClassName}}</a></span>
+                    <span>{{schoolClass.getEnrollmentYear}}</span>
+                    <span>{{schoolClass.getStudentCount}}</span>
+                    <span>{{schoolClass.getSchoolClassLevel}}</span>
+                    {% if schoolClass.getIsHalfYear == 0 %}
+                    <span>Halbjahr</span>
+                    {% else %}
+                    <span>Ganzjahr</span>
+                    {% endif %}
+                {% endfor %}
+
+            </div>
+        </div>
+
+        <div class="box icon icon-my-classes-assign">
+            <h2>Klasse abgeben</h2>
+            <p>Sie können eine Klasse mit allen Schülern an eine andere Lehrkraft dieser Schule abgeben. </p>
+            <form action="'.$this->getRouteUrl("Add_Schoolclass", "&action=addClass").'" method="post">
+            <div>
+                <direct-label class="w-33">Wählen Sie eine Klasse</direct-label>
+                <select class="input-egrade" name="assign_class" required>
+                    <option value="" disabled selected></option>
+                </select>   
+            </div>
+            <div>
+                <button type="submit" class="btn-egrade" name="action" value="">Klasse abgeben</button>
+            </div>
+            </form>
+        </div>
+
+        <div class="box icon icon-my-classes-add">
+            <h2>Neue Klasse anlegen</h2>
+            <p>Wenn Sie eine neue Klasse anlegen, werden Sie dieser als Lehrperson zugewiesen und können sie verwalten. </p>
+            <form id="frmAddClass" action="index.php?function=add_schoolclass&action=addClass" method="post">
+            <div>
+                <direct-label class="w-33">Jahr der Einschulung</direct-label>
+                <select name="enrollment_year" class="input-egrade select-class-enrollment-year" required>
+                    {% for i in -5..10 %}
+                        <option value="{{ actualYear|date_modify("+1 year")|date("Y")+i }}" >
+                            {{ actualYear|date_modify("+1 year")|date("Y")+i }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div>
+                <direct-label class="w-33">Klassenstufe</direct-label>
+                <select name="class_level" class="input-egrade input-class-level" required>
+                    <option value="1">Stufe 1</option>
+                    <option value="2">Stufe 2</option>
+                    <option value="3">Stufe 3</option>
+                    <option value="4">Stufe 4</option>
+                </select>
+            </div>
+            <div>
+                <direct-label class="w-33">Kürzel der Klasse</direct-label>
+                <input type="text" name="schoolclass_name" class="input-egrade input-class-name" value="" placeholder="Kürzel eingeben, z.B. '1a'" required/>
+            </div>
+            <div>
+                <direct-label class="w-33">Zeugnisart</direct-label>
+                <select name="is_halfyear" class="input-egrade input-is-halfyear" required>
+                    <option value="0">Halbjahreszeugnis</option>
+                    <option value="1">Ganzjahreszeugnis</option>
+                </select>
+            </div>
+            <div>
+                <button type="button" name="action" class="btn-egrade" id="btnAddClass" value="">Klasse anlegen</button>
+            </div>
+            </form>
+        </div>
+    </div>
+    {% include 'My_Classes_js.html' %}
+</main>
+{% include 'Footer.html' %}

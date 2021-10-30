@@ -1,0 +1,42 @@
+<script type="module">
+
+let reason = document.querySelector('.input-reason')
+let dateFrom = document.querySelector('.input-date-from');
+let dateTo = document.querySelector('.input-date-to');
+let btnAbsences = document.querySelector('#btnAbsences');
+var diffDays = 0;
+
+
+// Date Calculator
+
+function dateCalculator() {
+    let dateCalcFrom = moment(new Date($('.input-date-from').val()), "DD.MM.YYYY");
+    let dateCalcTo = moment(new Date($('.input-date-to').val()), "DD.MM.YYYY");
+    diffDays = dateCalcTo.diff(dateCalcFrom, 'days');    
+    console.log('Difference of days: ' + diffDays);
+    if (diffDays >= 3) {
+        toastr.info("Achtung: Ab einer Abwesenheit von drei Tagen ist möglicherweise ein Attest erforderlich.");
+    }
+    if (diffDays <= 0 || diffDays == "NaN") {
+        toastr.info("Der Abwesenheitszeitraum ist ungültig. Prüfen Sie Ihre Eingaben.");
+    } 
+}
+
+
+dateFrom.addEventListener ("focusout", () => { dateCalculator( )});
+dateTo.addEventListener ("focusout", () => { dateCalculator( )});
+
+btnAbsences.addEventListener("click", () => { 
+
+    if (reason.value !== '' && dateFrom.value !== '' && dateTo.value != '' && diffDays > 0) {
+        submit("#frmAbsences", "Ihre Abwesenheit wurde angelegt.");
+        closeDialogue();
+        directRouting('index.php?function=Absences', '', 3, 'body', '.dialogue', false);
+    } else {
+        document.querySelector('#frmAbsences').reportValidity();
+        toastr.info("Bitte füllen Sie alle erforderlichen Felder mit validen Werten aus, um eine Abwesenheit zu melden.");
+    }
+
+});
+
+</script>

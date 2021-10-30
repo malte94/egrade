@@ -1,0 +1,34 @@
+{% include 'Header.html' %}
+<main>
+    <div class="grid-pinboard">
+        <div class="col-pinboard-main">
+            <h2>Digitales Pinboard</h2>
+            <p>Hier haben Sie die Möglichkeit, ein schulweites Pinboard oder schwarzes Brett zu verwalten. Dieses ist öffentlich für alle Eltern sowie Schüler unter der folgenden URL zugänglich: </p>
+            <p><a href="{{ global_App_Url }}/{{ board_id }}" target="_BLANK">{{ global_App_Url }}/<b>{{ board_id }}</b></a></p>
+            <form action="index.php?function=pinboard&action=save&is_ajax=1" id="frmPinboard" method="POST">
+                <input type="hidden" name="board_id" value="{{ board_id }}" />
+                <div class="flex-row m-0">
+                    <div class="box flex-100">
+                        <h3>Vertretungsplan erstellen</h3>
+                        <textarea name="substitution" class="mceEditor" rows="5" cols="30" placeholder="Bisher noch keine Eingabe ...">{{ substitution }}</textarea>
+                    </div>
+                    <div class="box">
+                        <h3>Ankündigungen</h3>
+                        <textarea name="announcements" class="mceSmallEditor" rows="5" cols="30" placeholder="Bisher noch keine Eingabe ...">{{ announcements }}</textarea>
+                    </div>
+                    <div class="box">
+                        <h3>Informationen</h3>
+                        <textarea name="information" class="mceSmallEditor" rows="5" cols="30" placeholder="Bisher noch keine Eingabe ...">{{ information }}</textarea>
+                    </div>
+                </div>
+                <div class="box plain">
+                    <a href="{{ global_App_Url }}/{{ board_id }}" class="btn-egrade icon" target="_BLANK"> <span class="material-icons"> devices </span> Öffentliches Pinboard ansehen</a>
+                    <a href="{{ global_App_Url }}/{{ board_id }}" class="btn-egrade icon" target="_BLANK"> <span class="material-icons"> tv </span> Pinboard für Schul-TV ansehen</a>
+                    <button type="button" class="btn-egrade save-pinboard icon"> <span class="material-icons"> save </span> Speichern</button>
+                </div>
+            </form>
+        </div>
+        </div>
+        {% include 'Pinboard_js.html' %}    
+    </main>
+{% include 'Footer.html' %}

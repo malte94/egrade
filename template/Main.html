@@ -1,0 +1,55 @@
+{% include 'Header.html' %}
+    <main>
+        <div class="flex-row">
+            <div class="box flex-33 icon icon-my-classes-students">
+                <h2>Meine Klassen</h2>
+                <p>Die folgenden Klassen sind Ihnen zugeordnet.</p>
+                <div class="grid-table table-col-4">
+                    <span>
+                    <strong>Name</strong>
+                    </span>
+                    <span>
+                    <strong>Jahrgang</strong>
+                    </span>
+                    <span>
+                    <strong>Schüler</strong>
+                    </span>
+                    <span>
+                    <strong>Stufe</strong>
+                    </span>
+                    {% for schoolClass in schoolClasses|sort((a, b) => a.getSchoolClassName <=> b.getSchoolClassName) %}
+                        <span><a href="{{urlSchoolClass}}{{schoolClass.getSchoolClassId}}">Klasse {{schoolClass.getSchoolClassName}}</a></span>
+                        <span>{{schoolClass.getEnrollmentYear}}</span>
+                        <span>{{schoolClass.getStudentCount}}</span>
+                        <span>{{schoolClass.getSchoolClassLevel}}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="box flex-33 icon icon-student">
+                <h2>Kürzlich hinzugefügte Schüler</h2>
+                <p>Diese Schüler haben Sie zuletzt angelegt.</p>
+                    <div class="grid-table table-col-2">
+                        <span>
+                        <strong>Name</strong>
+                        </span>
+                        <span>
+                        <strong>Geburtstag</strong>
+                        </span>
+                        {% for student in userStudents | slice(0, 5) | sort((b, a) => a.DateOfBirth <=> b.DateOfBirth) %}
+                            <span><a href="{{urlUserStudents}}{{student.getSchoolClassId}}&student_id={{student.getStudentID}}">{{student.getFirstName}} {{student.getLastname}}</a></span>
+                            <span>{{student.DateOfBirth | date("d.m.Y")}}</span>
+                        {% endfor %}
+                    </div>
+            </div>
+            <div class="box flex-33 notes icon icon-notes">
+                <h2>Meine Notizen</h2>
+                <form id="frmUserNotes" method="POST" action="{{urlMain}}&action=updateUserNotes"> 
+                    <textarea class="text-justify" name="user_notes" placeholder="Tippen Sie hier Ihre Notizen ein ...">{{user.getUserNotes}}</textarea>
+                    <script type="module">
+                        autoSubmit("#frmUserNotes", "form :input");
+                   </script>
+                   </form>
+            </div>
+        </div>
+    </main>
+{% include 'Footer.html' %}

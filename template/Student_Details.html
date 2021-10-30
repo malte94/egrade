@@ -1,0 +1,55 @@
+{% include 'Header.html' %}
+<main>
+    <div class="grid-single-student">
+        <div class="col-single-student">
+                    {% if selected_schoolclass is empty %}
+                    <div class="col-50"><div class="box">Fehler: Keine oder ungültige Klasse ausgewählt</div></div>
+                    {% else %}
+                    <h1>{{selected_student.getFirstName}} {{selected_student.getLastName}}</h1>
+                    <img src="template/img/rayman.PNG">
+                    <p><b>Geboren</b><br><span class="birthdate">{{selected_student.getDateOfBirth | date("d.m.Y")}}</span></p>
+                    <p><b>Geschlecht</b><br>-</p>
+                    <p><b>Nationalität</b><br> - </p>
+                    <p><b>Klasse</b><br>Klasse {{selected_schoolclass.getSchoolClassName}}</p>
+                    <p><b>Wohnort</b><br> - </p>
+                    <p><b>E-Mail</b><br> - </p>
+                    <p><b>Telefon</b><br> - </p>
+                </div> 
+                    <div class="col-single-student-info">
+                        <h2>Leistungsübersicht</h2>
+                        <p>Die folgenden Anmerkungen und Leistungen über {{selected_student.getFirstName}} wurden bisher erfasst.
+                        <div class="flex-row">
+                            <div class="box flex-100">
+                                <h3>Schulnotenheft</h3>
+                                {% if selected_schoolclass.getSchoolClassLevel < 2 %}
+                                <p>Das Schulnotenheft steht erst ab der dritten Klassenstufe zur Verfügung. {{selected_student.getFirstName}} ist einer Klasse der Stufe {{selected_schoolclass.getSchoolClassLevel}} zugeordnet.</p>
+                                {% else %}
+                                <textarea name="schulnotenheft" class="mceEditor" placeholder="Bisher noch keine Eingabe ...">
+                                    <table class="schulnotenheft-table mce-item-table" width="857" style="height: 226px;" data-mce-style="height: 226px;"><tbody><tr style="height: 37px;" data-mce-style="height: 37px;"><td style="width: 281px; height: 37px;" data-mce-style="width: 281px; height: 37px;"><br></td><td style="width: 131px; text-align: center; height: 37px;" data-mce-style="width: 131px; text-align: center; height: 37px;"><strong>Mathematik</strong></td><td style="width: 90px; text-align: center; height: 37px;" data-mce-style="width: 90px; text-align: center; height: 37px;"><strong>Deutsch</strong></td><td style="width: 88px; text-align: center; height: 37px;" data-mce-style="width: 88px; text-align: center; height: 37px;"><strong>Englisch</strong></td><td style="width: 159px; text-align: center; height: 37px;" data-mce-style="width: 159px; text-align: center; height: 37px;"><strong>Sachunterricht</strong></td><td style="width: 89px; text-align: center; height: 37px;" data-mce-style="width: 89px; text-align: center; height: 37px;"><strong>Religion</strong></td></tr><tr style="height: 37px;" data-mce-style="height: 37px;"><td style="width: 281px; height: 37px;" data-mce-style="width: 281px; height: 37px;"><strong>1. Klassenarbeit</strong></td><td style="width: 131px; height: 37px; text-align: center;" data-mce-style="width: 131px; height: 37px; text-align: center;"><br></td><td style="width: 90px; height: 37px; text-align: center;" data-mce-style="width: 90px; height: 37px; text-align: center;"><br></td><td style="width: 88px; height: 37px; text-align: center;" data-mce-style="width: 88px; height: 37px; text-align: center;"><br></td><td style="width: 159px; height: 37px; text-align: center;" data-mce-style="width: 159px; height: 37px; text-align: center;"><br></td><td style="width: 89px; height: 37px; text-align: center;" data-mce-style="width: 89px; height: 37px; text-align: center;"><br></td></tr><tr style="height: 38px;" data-mce-style="height: 38px;"><td style="width: 281px; height: 38px;" data-mce-style="width: 281px; height: 38px;"><strong>2. Klassenarbeit</strong></td><td style="width: 131px; height: 38px; text-align: center;" data-mce-style="width: 131px; height: 38px; text-align: center;"><br></td><td style="width: 90px; height: 38px; text-align: center;" data-mce-style="width: 90px; height: 38px; text-align: center;"><br></td><td style="width: 88px; height: 38px; text-align: center;" data-mce-style="width: 88px; height: 38px; text-align: center;"><br></td><td style="width: 159px; height: 38px; text-align: center;" data-mce-style="width: 159px; height: 38px; text-align: center;"><br></td><td style="width: 89px; height: 38px; text-align: center;" data-mce-style="width: 89px; height: 38px; text-align: center;"><br></td></tr><tr style="height: 38px;" data-mce-style="height: 38px;"><td style="width: 281px; height: 38px;" data-mce-style="width: 281px; height: 38px;"><strong>3. Klassenarbeit</strong></td><td style="width: 131px; height: 38px; text-align: center;" data-mce-style="width: 131px; height: 38px; text-align: center;"><br></td><td style="width: 90px; height: 38px; text-align: center;" data-mce-style="width: 90px; height: 38px; text-align: center;"><br></td><td style="width: 88px; height: 38px; text-align: center;" data-mce-style="width: 88px; height: 38px; text-align: center;"><br></td><td style="width: 159px; height: 38px; text-align: center;" data-mce-style="width: 159px; height: 38px; text-align: center;"><br></td><td style="width: 89px; height: 38px; text-align: center;" data-mce-style="width: 89px; height: 38px; text-align: center;"><br></td></tr><tr style="height: 38px;" data-mce-style="height: 38px;"><td style="width: 281px; height: 38px;" data-mce-style="width: 281px; height: 38px;"><strong>Hausaufgabenüberprüfung</strong></td><td style="width: 131px; height: 38px; text-align: center;" data-mce-style="width: 131px; height: 38px; text-align: center;"><br></td><td style="width: 90px; height: 38px; text-align: center;" data-mce-style="width: 90px; height: 38px; text-align: center;"><br></td><td style="width: 88px; height: 38px; text-align: center;" data-mce-style="width: 88px; height: 38px; text-align: center;"><br></td><td style="width: 159px; height: 38px; text-align: center;" data-mce-style="width: 159px; height: 38px; text-align: center;"><br></td><td style="width: 89px; height: 38px; text-align: center;" data-mce-style="width: 89px; height: 38px; text-align: center;"><br></td></tr><tr style="height: 38px;" data-mce-style="height: 38px;"><td style="width: 281px; height: 38px;" data-mce-style="width: 281px; height: 38px;"><strong>Heftnote</strong></td><td style="width: 131px; height: 38px; text-align: center;" data-mce-style="width: 131px; height: 38px; text-align: center;"><br></td><td style="width: 90px; height: 38px; text-align: center;" data-mce-style="width: 90px; height: 38px; text-align: center;"><br></td><td style="width: 88px; height: 38px; text-align: center;" data-mce-style="width: 88px; height: 38px; text-align: center;"><br></td><td style="width: 159px; height: 38px; text-align: center;" data-mce-style="width: 159px; height: 38px; text-align: center;"><br></td><td style="width: 89px; height: 38px; text-align: center;" data-mce-style="width: 89px; height: 38px; text-align: center;"><br></td></tr></tbody></table>
+                                </textarea>
+                                {% endif %}
+                            </div>
+                            <div class="box">
+                                <h3>Notizen</h3>
+                                <form id="update_notes" method="POST" action="{{urlStudentProfile}}{{selected_student.getStudentId}}&action=updateStudentNotes"> 
+                                 <textarea name="student_notes" class="mceNoEditor" rows="5" cols="30" placeholder="Bisher noch keine Eingabe ...">{{selected_student.getStudentNotes()}}</textarea>
+                                </form>
+                            </div>
+                            <div class="box">
+                                <h3>Zeugnisse verfassen</h3>
+                                <p>Beginnen Sie jetzt mit dem Schreiben von Zeugnissen für diesen Schüler.</p>
+                                <a class="btn-egrade" href="{{urlCreateReports}}{{selected_student.getStudentId}}">Zeugnisse schreiben</a>
+                            </div>
+                            <div class="box">
+                                <h3>Statistik</h3>
+                                <p>Derzeit liegen noch keine Statistiken über diesen Schüler vor.</p>
+                            </div>
+                        </div>
+                    </div>
+            <!-- JavaScript -->
+
+            {% include 'Student_Details_js.html' %}
+        </div>    
+    </main>
+{% endif %}
+{% include 'Footer.html' %}

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="utf-8" />
+    <!-- Web App Settings -->
+    <meta name="viewport" content="width=device-width, minimal-ui, width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/svg+xml" href="template/meta/favicon.svg" sizes="any">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="apple-touch-icon" href="template/meta/apple-touch-icon.png">
+    <link rel="apple-touch-icon-precomposed" href="template/meta/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="template/meta/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="template/meta/favicon-16x16.png">
+    <link rel="mask-icon" href="template/meta/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#00679e">
+    <meta name="theme-color" content="#00679e">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Contrail One|Jockey One|Knewave|Lato|Lobster|Lora|Pacifico|Roboto|Viga&display=swap" rel="stylesheet">
+    <!-- _____ -->
+    <link rel="stylesheet" href="template/css/bootstrap-reboot.css">
+    <link rel="stylesheet" href="template/css/bootstrap.min.css">
+    <link rel="stylesheet" href="template/css/animate.css">
+    <link rel="stylesheet" href="template/css/main.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script type="text/javascript" src="template/js/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="template/js/js.cookie.min.js"></script>
+    <title>{{ school_name }} – Pinboard 📌</title>
+</head>
+
+<html>
+    <body>
+        <div class="hasPinboard"></div>
+        <div class="grid-external-pinboard">
+            <div class="pin"></div>
+            <div class="pinboard">
+                    <h1>{{ school_name }}</h1>
+                    <h2>Ankündigungen</h2>
+                    <div>
+                        {{ announcements|raw }}
+                    </div>
+                    <h2>Vertretungsplan</h2>
+                    <div class="pinboard-substitution">
+                        {{ substitution|raw }}
+                    </div>
+                    <h2>Informationen</h2>
+                    <div>
+                        {{ information|raw }}
+                    </div>
+            </div>
+        </div>
+
+        <script type="module">
+                $(".pinboard").scroll(function (e) {
+                    //$(".pin").css("display", "none");
+                });
+            </script>
+    </body>
+</html>

@@ -1,0 +1,77 @@
+<script type="module">
+
+$( "direct-label" ).click(function() {
+    $(this).next('input').select();
+    console.log("Selected nearest input field.");
+});
+
+/* Rename School */
+
+$("#btnUpdateSchoolName").click(function() {  
+
+var schoolname = $( ".input-school-name" ).val();
+
+if (schoolname !== '') {
+    submit("#updateSchoolName", "Die Namensänderung wurde durchgeführt.");
+    $(".footer-school-name").html(schoolname);
+} else
+{
+    toastr.info("Ein leerer Schulname ist nicht zulässig.");
+}
+
+});
+
+/* Update Global Grade Parametres */
+
+$("#btnUpdateSchoolVars").click(function() {  
+
+if ($(".input-conference-date").val() && $(".input-issue-date").val()) {
+    submit("#updateSchoolVars", "Die globale Zeugniskonfiguration wurde gespeichert.");
+} else {
+    toastr.info("Bitte vervollständigen Sie Ihre Eingaben.");
+    document.querySelector('#updateSchoolVars').reportValidity();
+}
+
+});
+
+/* Save Templates */
+
+$("#btnUpdateSchoolTemplates").click(function() {  
+    submit("#updateSchoolTemplates", "Die Templates wurden gespeichert.");
+    closeDialogue();
+    directRouting('index.php?function=Admin_School', '', 3, 'body', '.dialogue', false);
+});
+
+/* Save Global Template Variables */
+
+$('.admin-school .template-variables').focusout(function(){
+    console.log(this);
+    var template_vars = {
+        valuetype: $(this).data("valuetype"),
+        varname: $(this).data("varname"),
+        value : $(this).val(),
+        name : $(this).attr('name'),
+        id : $(this).attr('id'),
+        templatevarid : $(this).data('templatevarid'),
+        idtemplate : $(this).data('idtemplate')
+    };
+
+    $.post( "index.php?function=admin_school&is_ajax=1&action=updateTemplateVariables", { data: template_vars })
+        .done(function( data ) {
+
+            if(data.success == true)
+            {
+                toastr.success("Eingabe erfolgreich gespeichert");
+            }else{
+                toastr.error("Ein Fehler beim Speichern der Daten ist aufgetreten");
+            }
+        })
+        .fail(function(){
+            toastr.error("Es scheint ein Fehler mit deiner Verbindung zu geben. Deine Eingaben wurden möglicherweise nicht gespeichert.");
+        });
+
+
+    console.log(template_vars);
+});
+
+</script>

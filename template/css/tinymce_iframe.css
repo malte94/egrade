@@ -1,0 +1,82 @@
+body { 
+    font-family: "Lato", Verdana, Geneva, Tahoma, sans-serif; 
+    font-size: 14px;
+    padding: 0; 
+    margin: 6px 0px 0px 1px; 
+    text-align: justify !important;
+    border: none !important;
+}
+
+body::-webkit-scrollbar
+{
+    /*background: var(--color-accent-footer);*/
+    /* background: var(--color-font-light-grey); */
+    background: transparent;
+    width: 4px;
+
+}
+
+body::-webkit-scrollbar-track
+{
+  /*background: var(--color-accent-footer);*/
+  /* background: var(--color-font-light-grey); */
+  background: transparent;
+}
+
+body::-webkit-scrollbar-thumb
+{
+    border-radius: 0px;
+    background-color: rgb(22, 125, 199);
+    height: 100px;
+	  transition: all ease 2.5s;
+}
+
+body::-webkit-scrollbar-thumb:window-inactive {
+  /* background: #555D69; */
+  background: rgb(22, 125, 199,.5);
+}
+
+
+body::-webkit-scrollbar-thumb:hover 
+{
+    background-color: #0096FF;
+}
+
+::-webkit-scrollbar
+{
+    /*background: var(--color-accent-footer);*/
+    /* background: var(--color-font-light-grey); */
+    background: transparent;
+    width: 7px;
+
+}
+
+::-webkit-scrollbar-track
+{
+  /*background: var(--color-accent-footer);*/
+  /* background: var(--color-font-light-grey); */
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb
+{
+    border-radius: 0px;
+    background-color: rgb(22, 125, 199);
+    height: 100px;
+	  transition: all ease 2.5s;
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+  /* background: #555D69; */
+  background: rgb(22, 125, 199,.5);
+}
+
+
+::-webkit-scrollbar-thumb:hover 
+{
+    background-color: #0096FF;
+}
+
+.mce-pagebreak {
+  width: 95% !important;
+}
